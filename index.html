@@ -4,6 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Lê Văn Tiến · Industrial Engineer · Portfolio</title>
+<link rel="canonical" href="https://vterry2212.github.io/portfolio/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vterry2212.github.io/portfolio/">
+<meta property="og:title" content="Lê Văn Tiến · Industrial Engineer · Portfolio">
+<meta property="og:description" content="Production tools for structural steel fabrication, built by Lê Văn Tiến: PDF Stamp Tool, 3D Batch Viewer, NC Processing Quote and the Weldon AI agent, with demos you can try.">
+<meta property="og:image" content="https://vterry2212.github.io/portfolio/img/cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="Production tools for structural steel fabrication, built by Lê Văn Tiến: PDF Stamp Tool, 3D Batch Viewer, NC Processing Quote and the Weldon AI agent, with demos you can try.">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -2534,16 +2543,24 @@ function bind(){
 }
 /* ---------- 3D simulation ----------
    Step 4 opens the live 3D of version 29 of the real tool (sim/index.html, made by Build-scripts/build_sim.py) in a frame.
-   If the frame cannot start (blocked, file missing, no WebGL) the recorded clip img/sim3d.mp4 plays instead. */
+   If the file is not on the host the clip plays straight away. If the frame cannot start (blocked, no WebGL) the recorded clip img/sim3d.mp4 plays instead. */
 var SIM={mode:null,frame:null,booted:false,ok:false,t1:null,t2:null};
 function simBox(){return $('vc-sim-box')}
 function simNote(s){var n=$('vc-sim-note'); if(n) n.textContent=s}
 function simSend(cmd){ if(SIM.mode==='live'&&SIM.frame&&SIM.frame.contentWindow){ try{SIM.frame.contentWindow.postMessage({to:'sim29',cmd:cmd},'*')}catch(e){} } }
-function simClip(){
+function simClip(plain){
   if(SIM.mode==='clip') return; clearTimeout(SIM.t1); clearTimeout(SIM.t2); SIM.mode='clip'; SIM.frame=null;
   simBox().innerHTML='<video id="vc-sim-vid" src="img/sim3d.mp4" poster="img/sim3d_poster.jpg" controls muted loop playsinline preload="metadata" aria-label="Recording of the 3D simulation in the real tool"></video>';
-  simNote('Recording from the real tool: a bar runs through the laser machine. The live 3D could not start in this browser.');
+  simNote('Recording from the real tool: a bar runs through the laser machine.'+(plain===true?'':' The live 3D could not start in this browser.'));
   var v=$('vc-sim-vid'); if(v&&!K.RM){ try{ var pr=v.play(); if(pr&&pr.catch) pr.catch(function(){}) }catch(e){} }
+}
+/* A copy of the page put on a web host without the sim folder goes straight to the clip (no flash of the host's "not found" page). */
+function simStart(){
+  SIM.mode='probe';
+  var go=function(miss){ if(SIM.mode!=='probe') return; SIM.mode=null; if(miss) simClip(true); else simLive() };
+  if(!window.fetch||!/^https?:$/.test(location.protocol)){ go(false); return }
+  var t=setTimeout(function(){go(false)},4000);
+  try{ fetch('sim/index.html',{method:'HEAD',cache:'no-store'}).then(function(r){clearTimeout(t);go(r.status===404||r.status===410)},function(){clearTimeout(t);go(false)}) }catch(e){ clearTimeout(t); go(false) }
 }
 function simLive(){
   SIM.mode='live'; SIM.booted=false; SIM.ok=false; SIM.key=null;
@@ -2589,7 +2606,8 @@ function openSim(b,keep){
   V.simOpen=true; V.simBatch=b;
   var panel=$('vc-sim-panel'); if(!panel) return; panel.hidden=false; $('vc-sim-name').textContent=b.name.replace(JOB+'_','')+' · '+b.div;
   if(!keep) panel.scrollIntoView({behavior:K.RM?'auto':'smooth',block:'start'});
-  if(!SIM.mode) simLive();
+  if(!SIM.mode) simStart();
+  else if(SIM.mode==='probe'){}
   else if(SIM.mode==='live'){ if(SIM.booted) simBatch() }
   else { var v=$('vc-sim-vid'); if(v&&!K.RM){ try{ var pr=v.play(); if(pr&&pr.catch) pr.catch(function(){}) }catch(e){} } }
 }
