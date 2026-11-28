@@ -1366,6 +1366,22 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
 .tr-gstep.now{background:#EEF4FB;border-color:var(--tb)}
 .tr-gstep.now i{background:var(--tb);color:#fff}
 .tr-gstep.done i{background:var(--tg);color:#fff}
+.tr-guide.tr-pop{position:fixed;z-index:40;left:50%;bottom:22px;transform:translateX(-50%);width:min(640px,calc(100vw - 32px));background:#fff;border:1px solid var(--tl);border-left:1px solid var(--tl);border-radius:14px;box-shadow:0 18px 50px rgba(6,10,16,.38);padding:14px 16px 16px;gap:10px}
+.tr-pop::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:4px;border-radius:0 4px 4px 0;background:var(--tb)}
+.tr-ph{display:flex;align-items:center;gap:10px;min-width:0}
+.tr-pk{flex:none;font:800 11px/1 Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;background:var(--tb);color:#fff;padding:6px 9px;border-radius:999px}
+.tr-ph b{flex:1;min-width:0;font-size:16px;color:#10233D}
+.tr-px{flex:none;border:0;background:#F1F4F8;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:13px;color:#10233D}
+.tr-px:hover{background:#E2E8F0}
+.tr-pl{margin:0;font-size:14.5px;font-weight:600;color:#10233D}
+.tr-pop .tr-gsteps{gap:6px}
+.tr-pop .tr-gstep{padding:6px 8px;gap:7px}
+.tr-pop .tr-gstep i{width:22px;height:22px;font-size:11px}
+.tr-pop .tr-gstep b{font-size:12.5px}
+.tr-main:has(.tr-pop){padding-bottom:180px}
+@keyframes tr-pop-in{from{opacity:0;transform:translate(-50%,18px)}to{opacity:1;transform:translateX(-50%)}}
+@media (prefers-reduced-motion:no-preference){.tr-pop.in{animation:tr-pop-in .45s cubic-bezier(.22,1,.36,1)}}
+@media (max-width:640px){.tr-pop .tr-gstep span{display:none}.tr-pop .tr-gstep{justify-content:center}.tr-guide.tr-pop{bottom:86px}}
 .tr-gline{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;justify-content:space-between;font-size:14.5px;font-weight:600;color:#10233D}
 .tr-next{outline:3px solid #F2A900;outline-offset:3px;border-radius:6px}
 @keyframes tr-pulse{0%{box-shadow:0 0 0 0 rgba(242,169,0,.55)}100%{box-shadow:0 0 0 12px rgba(242,169,0,0)}}
@@ -3374,11 +3390,13 @@ function nextUp(){ var n=gStep(), here=function(v,id){return S.view===v&&(!id||S
   if(n===4) return here('test')?(S.quiz.on?['.tr-opts','Answer before the clock runs out.']:['#tr-start','Press Start the test.']):[lit,'Click step 4 to open the test.'];
   if(n===5) return [lit,'Click step 5 to see your results and the team view.'];
   return [null,'All five steps are done. Try Start again on a task, turn the model, or ask the chatbot a question.'] }
-function guideHTML(){ var n=gStep(), d=gDone();
-  var h='<div class="tr-guide"><div class="tr-gsteps">';
+var lastG=0;   /* step number shown last time, so the pop-up only slides in when the step changes */
+function guideHTML(){ var n=gStep(), d=gDone(), fin=n>5;
+  var h='<div class="tr-guide tr-pop'+(n!==lastG?' in':'')+'" role="dialog" aria-label="Demo steps"><div class="tr-ph"><span class="tr-pk">'+(fin?'All done':'Step '+n+' of 5')+'</span><b>'+(fin?'All five steps are done':esc(GST[n-1][0]))+'</b><button type="button" class="tr-px" id="tr-gh" aria-label="Hide the steps" title="Hide the steps">✕</button></div>'+
+    '<p class="tr-pl" role="status">'+esc(nextUp()[1])+'</p><div class="tr-gsteps">';
   GST.forEach(function(s,i){var k=i+1,c=d[i]?' done':k===n?' now':'';
-    h+='<button type="button" class="tr-gstep'+c+'" data-g="'+k+'"'+(k<=n?'':' disabled')+'><i>'+(d[i]?'✓':k)+'</i><span><b>'+s[0]+'</b><small>'+s[1]+'</small></span></button>'});
-  return h+'</div><div class="tr-gline" role="status"><span>'+esc(nextUp()[1])+'</span><button type="button" class="tr-lnk" id="tr-gh">Hide the steps</button></div></div>';
+    h+='<button type="button" class="tr-gstep'+c+'" data-g="'+k+'"'+(k<=n?'':' disabled')+' title="'+esc(s[0]+' · '+s[1])+'"><i>'+(d[i]?'✓':k)+'</i><span><b>'+s[0]+'</b></span></button>'});
+  lastG=n; return h+'</div></div>';
 }
 
 /* ---- 3D model of the five assemblies, coloured by status (a small canvas renderer, no library) ---- */
