@@ -547,6 +547,29 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
   .contact-art.js.go .ba-float.f2{animation-duration:5s;animation-delay:2.6s}
   .contact-art.js.go .ba-float.f3{animation-duration:7s;animation-delay:3s}
 }
+/* WiseEye tab: the daily clock-check table (sample data) */
+.ck-board{background:#1C2125;color:#E9ECEE;padding:16px 18px 18px;overflow-x:auto;border-bottom:1px solid var(--ink)}
+.ck-top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-bottom:12px;font:500 11px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.ck-top b{font:700 18px/1 var(--f-display);letter-spacing:.03em;color:#fff}
+.ck-top i{margin-left:auto;font-style:normal;background:var(--hivis);color:#fff;padding:5px 10px;border-radius:999px}
+.ck-table{width:100%;min-width:460px;border-collapse:collapse;font:500 13.5px/1.2 var(--f-mono);font-variant-numeric:tabular-nums}
+.ck-table th{text-align:left;font-size:10.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5);padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.18)}
+.ck-table td{padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.08);white-space:nowrap}
+.ck-table .miss td{background:rgba(217,72,15,.18)}
+.ck-table i{font-style:normal}
+.ck-table i.ok{color:#7EE2A8}
+.ck-table i.no{color:#fff;background:var(--hivis);padding:3px 9px;border-radius:999px;font-size:12px}
+@media (prefers-reduced-motion:no-preference){
+  #wiseeye-tool:not([hidden]) .ck-table tbody tr{animation:ck-row .55s cubic-bezier(.22,1,.36,1) both}
+  #wiseeye-tool:not([hidden]) .ck-table tbody tr:nth-child(2){animation-delay:.08s}
+  #wiseeye-tool:not([hidden]) .ck-table tbody tr:nth-child(3){animation-delay:.16s}
+  #wiseeye-tool:not([hidden]) .ck-table tbody tr:nth-child(4){animation-delay:.24s}
+  #wiseeye-tool:not([hidden]) .ck-table tbody tr:nth-child(5){animation-delay:.32s}
+  #wiseeye-tool:not([hidden]) .ck-table tbody tr:nth-child(6){animation-delay:.4s}
+  #wiseeye-tool:not([hidden]) .ck-table .miss td{animation:wb-flash 1.2s ease .9s 2}
+}
+@keyframes ck-row{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:none}}
+.more-grid .mini.wide{grid-column:1/-1}
 /* NC Quote screenshots fan out from a stack as you scroll (from v2) */
 .feature-grid .shot{border-radius:8px;overflow:hidden;box-shadow:0 18px 40px rgba(28,33,37,.14)}
 .feature-grid>div{will-change:transform;position:relative}
@@ -1304,7 +1327,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
         <span class="hl-tag">Training · simulator</span>
         <div class="hl-meta"><div><p class="eyebrow">Training · Tekla PowerFab</p><h3>PowerFab Training Website</h3><p>Learn PowerFab topic by topic, then practise on a simulator of the real screens.</p></div><span class="hl-go" aria-hidden="true">→</span></div>
       </a>
-      <a class="hl-card w5 wise" href="#more-tools" data-tab="more-tools" data-target="wiseeye">
+      <a class="hl-card w5 wise" href="#wiseeye-tool" data-tab="wiseeye-tool">
         <div class="hl-media wise-board" aria-hidden="true">
           <div class="wb-head"><span>Daily clock check</span><span>Today · sample data</span></div>
           <table class="wb-table">
@@ -1405,6 +1428,15 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
       <g class="truck"><rect class="mc" x="912" y="366" width="92" height="32"/><rect class="steel" x="920" y="373" width="76" height="6"/><rect class="steel" x="920" y="385" width="76" height="6"/><rect class="ln" x="1004" y="371" width="26" height="22" style="fill:var(--sheet)"/></g>
       <path class="ants" d="M826 382H886"/><path class="hv" d="M884 375l12 7-12 7z"/>
       <path class="ants" d="M372 250H354"/><path class="hv" d="M356 243l-12 7 12 7z"/><path class="ants" d="M422 392H440"/><path class="hv" d="M438 385l12 7-12 7z"/></g>
+      <!-- entrance door on the top wall: operators clock in on the WiseEye time clock -->
+      <a class="zone" href="#wiseeye-tool" data-go="wiseeye-tool" aria-label="Entrance door: WiseEye Clock Check">
+        <rect class="z-bg" x="560" y="8" width="270" height="60"/>
+        <text class="z-k" x="604" y="31">ENTRANCE · CLOCK IN</text><text class="z-n" x="604" y="56">WiseEye Clock Check</text>
+        <g><rect class="mc" x="796" y="18" width="22" height="34" rx="3"/><circle class="hv" cx="807" cy="40" r="5"/><rect class="ln" x="800" y="22" width="14" height="8" style="fill:var(--sheet)"/></g>
+        <g class="pin" transform="translate(570 38)"><circle class="ring" cx="11" cy="0" r="11"/><circle cx="11" cy="0" r="11"/><text x="11" y="4">7</text></g>
+      </a>
+      <g class="deco"><path d="M690 80H724" stroke="var(--sheet)" stroke-width="5" fill="none"/><path class="ln" d="M690 80V112A32 32 0 0 0 722 80"/>
+        <path class="ants" d="M707 68V94"/><path class="hv" d="M701 92l6 10 6-10z"/></g>
       <!-- the production team in Vietnam, working on live PowerFab data -->
       <a class="zone" href="#more-tools" data-go="more-tools" aria-label="Vietnam team, planning and data: More tools">
         <rect class="z-bg" x="20" y="492" width="148" height="60"/>
@@ -1424,6 +1456,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
       <a href="#batch-viewer">3D Batch Viewer</a>
       <a href="#weldon">Chatbot AI Agent</a>
       <a href="#training">PowerFab Training</a>
+      <a href="#wiseeye-tool">WiseEye</a>
       <a href="#more-tools" class="tab-gap">More tools</a>
       <a href="#experience">Experience</a>
     </nav>
@@ -1639,6 +1672,58 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
       </div>
     </article>
 
+    <!-- WiseEye Clock Check (entrance) -->
+    <article class="sheet" id="wiseeye-tool">
+      <div class="sheet-body">
+        <div class="sheet-text">
+          <p class="eyebrow">Office automation · Time clock</p>
+          <h3>WiseEye Clock Check</h3>
+          <p class="tagline">Synchronises the WiseEye fingerprint time clock with Workbench, and shows the admin which operators didn’t clock in or clock out that day.</p>
+          <div class="ba">
+            <div class="b"><span>Before</span><strong>Check the clock records by hand</strong><p>Someone had to compare the time clock with Workbench.</p></div>
+            <div class="a"><span>Now</span><strong>Sync and a daily list</strong><p>Clock-ins go straight into Workbench, and the missed ones are listed for the admin.</p></div>
+          </div>
+        </div>
+        <div class="shots mid">
+          <figure class="fig">
+            <div class="ck-board" role="img" aria-label="Daily clock check with sample data: six operators, two flagged. W02 has no clock-out and F01 has no clock-in.">
+              <div class="ck-top"><b>Daily clock check</b><span>Today · sample data</span><i>2 to follow up</i></div>
+              <table class="ck-table" aria-hidden="true">
+                <thead><tr><th>Operator</th><th>Team</th><th>Clock in</th><th>Clock out</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr><td>W01</td><td>Welding</td><td>06:58</td><td>15:32</td><td><i class="ok">OK</i></td></tr>
+                  <tr class="miss"><td>W02</td><td>Welding</td><td>07:02</td><td>—</td><td><i class="no">No clock-out</i></td></tr>
+                  <tr><td>W03</td><td>Welding</td><td>06:55</td><td>15:30</td><td><i class="ok">OK</i></td></tr>
+                  <tr class="miss"><td>F01</td><td>Fit-up</td><td>—</td><td>15:28</td><td><i class="no">No clock-in</i></td></tr>
+                  <tr><td>F02</td><td>Fit-up</td><td>07:00</td><td>15:35</td><td><i class="ok">OK</i></td></tr>
+                  <tr><td>P01</td><td>Painting</td><td>06:50</td><td>15:31</td><td><i class="ok">OK</i></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <figcaption><b>Sample data</b><span>The daily list the admin sees: who didn’t clock in or out that day.</span></figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="how">
+        <div>
+          <p class="eyebrow">How it works</p>
+          <ol class="fm" aria-label="How the WiseEye Clock Check works">
+            <li><button type="button" class="fst"><span class="fst-n"><svg class="ob" viewBox="0 0 72 56" aria-hidden="true"><path class="l" d="M22 4h28v48H22z"/><path class="z" d="M27 9h18v9H27z"/><circle class="la" cx="36" cy="34" r="9"/><path class="al" d="M31.5 35.5c0-3 2-5 4.5-5s4.5 2 4.5 5M34 39c0-1.8.8-3 2-3s2 1.2 2 3"/></svg></span><b>Clock in</b></button><p>Operators clock in and out with their fingerprint on the WiseEye time clock at the door.</p></li>
+            <li><button type="button" class="fst"><span class="fst-n"><svg class="ob" viewBox="0 0 72 56" aria-hidden="true"><path class="l" d="M4 14h24v28H4zM44 14h24v28H44z"/><path class="d" d="M9 22h14M9 28h14M9 34h9M49 22h14M49 28h14M49 34h9"/><path class="al" d="M31 24h10M37 20l4 4-4 4M41 34H31M35 30l-4 4 4 4"/></svg></span><b>Sync</b></button><p>The tool reads the time clock records automatically.</p></li>
+            <li><button type="button" class="fst"><span class="fst-n"><svg class="ob" viewBox="0 0 72 56" aria-hidden="true"><path class="l" d="M5 7h62v42H5z"/><path class="z" d="M5 7h62v8H5z"/><path class="d" d="M5 26h62M5 37h62M24 15v34M46 15v34"/><path class="a" d="M28 18h14v5H28z"/></svg></span><b>Workbench</b></button><p>Each operator’s clock-in and clock-out goes straight into the Workbench data.</p></li>
+            <li><button type="button" class="fst"><span class="fst-n"><svg class="ob" viewBox="0 0 72 56" aria-hidden="true"><path class="l" d="M6 6h40v44H6z"/><path class="d" d="M12 15h28M12 24h28M12 33h28M12 42h20"/><circle class="a" cx="52" cy="38" r="11"/><path class="w" d="M52 32v7M52 43v.5"/></svg></span><b>Check</b></button><p>Every day it finds the operators with a missing clock-in or clock-out.</p></li>
+            <li><button type="button" class="fst"><span class="fst-n"><svg class="ob" viewBox="0 0 72 56" aria-hidden="true"><circle class="l" cx="26" cy="17" r="9"/><path class="l" d="M10 50c1-11 8-17 16-17s15 6 16 17z"/><circle class="a" cx="53" cy="38" r="11"/><path class="w" d="M48 38l3.5 3.5 6.5-7"/></svg></span><b>Follow up</b></button><p>The admin sees the list and follows up with those operators. Nobody has to check every record.</p></li>
+          </ol>
+        </div>
+      </div>
+      <div class="tblock">
+        <div><span>Type</span><p>Office automation</p></div>
+        <div><span>Built with</span><p>Python · Windows installer · Microsoft 365</p></div>
+        <div><span>Connects to</span><p>WiseEye time clock · Workbench</p></div>
+        <div><span>Users</span><p>Office admin</p></div>
+      </div>
+    </article>
+
   <section class="more" id="more-tools" aria-labelledby="more-h">
     <div>
       <p class="eyebrow">Also built</p>
@@ -1649,7 +1734,6 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
       <article class="mini"><p class="eyebrow">PowerFab · AI</p><h3>PowerFab MCP Server</h3><ul class="mini-ul"><li>An MCP server I built on PowerFab’s Open API.</li><li>Runs as a service that the Chatbot AI Agent calls.</li><li>Runs as an extension connector for Claude that teammates install on their own laptops.</li><li>Both give read-only tools for live jobs, stock, purchasing and estimates.</li></ul><p class="mini-meta">C# · .NET 8 · MCP · Claude extension</p></article>
       <article class="mini"><p class="eyebrow">PowerFab · Scheduling</p><h3>Production Plan Update by Scheduled Milestone</h3><ul class="mini-ul"><li>Updates the production plan against its scheduled milestones from live PowerFab data.</li><li>Workshop progress is tracked without asking the operators.</li><li>Flags jobs that are ready to close, nearly delivered or missing from the plan.</li></ul><p class="mini-meta">Python · PowerFab · Excel</p></article>
       <article class="mini"><p class="eyebrow">PowerFab · Data synchronisation</p><h3>Production Control Data Sync</h3><ul class="mini-ul"><li>Synchronises production data between the Production Control interface and the PowerFab system.</li><li>Both show the same job and lot information.</li></ul><p class="mini-meta">Python · JavaScript · Excel</p></article>
-      <article class="mini" id="wiseeye"><p class="eyebrow">Office automation</p><h3>WiseEye and Workbench Sync</h3><ul class="mini-ul"><li>Synchronises the WiseEye fingerprint time clock with Workbench automatically.</li><li>Each operator’s clock-in and clock-out goes straight into the Workbench data.</li><li>Nobody has to check it again.</li><li>A daily clock check shows the admin which operators didn’t clock in or clock out that day.</li></ul><p class="mini-meta">Python · Windows installer · Microsoft 365</p></article>
       <article class="mini wide"><p class="eyebrow">PowerFab · Reports</p><h3>PowerFab Report Building</h3><ul class="mini-ul"><li>I build report layouts in PowerFab’s report designer, and the tools that read them.</li><li>The PDF Stamp Tool and Plate Process both start from one of these reports.</li></ul><div class="chips"><span>Production Control</span><span>Fab Matrix</span><span>Job Status by Lot</span><span>Material Traceability</span><span>Delivery Docket</span></div><p class="mini-meta">PowerFab report designer</p></article>
     </div>
   </section>
