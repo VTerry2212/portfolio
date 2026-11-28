@@ -714,6 +714,16 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
 .sw-arrow{fill:none;stroke:var(--hivis);stroke-width:2.6;stroke-dasharray:7 6}
 .sw-arrowhead{fill:none;stroke:var(--hivis);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 @media (prefers-reduced-motion:no-preference){.sw-save.on .sw-arrow{animation:ants 1s linear infinite}}
+/* WiseEye tab: day-in-motion clock check */
+.ck-now{display:inline-flex;align-items:baseline;gap:8px;margin-left:6px;padding:4px 10px;border:1px solid rgba(255,255,255,.18);border-radius:999px;color:#fff;letter-spacing:.04em}
+.ck-now b{font:700 15px/1 var(--f-mono);color:#7EE2A8;font-variant-numeric:tabular-nums}
+.ck-now em{font-style:normal;color:rgba(255,255,255,.65)}
+.ck-now.end b{color:#F0703A}
+.ck-top i{transition:opacity .4s ease}
+.ck-table td.ping{animation:ck-ping .9s ease}
+@keyframes ck-ping{0%{background:rgba(126,226,168,.45)}100%{background:transparent}}
+.ck-table i.wait{color:rgba(255,255,255,.4)}
+.ck-table i.work{color:#9CC3FF}
 /* NC Quote screenshots fan out from a stack as you scroll (from v2) */
 .feature-grid .shot{border-radius:8px;overflow:hidden;box-shadow:0 18px 40px rgba(28,33,37,.14)}
 .feature-grid>div{will-change:transform;position:relative}
@@ -1850,8 +1860,8 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
         </div>
         <div class="shots mid">
           <figure class="fig">
-            <button class="shot" type="button"><img src="img/training_practice.jpg" alt="Practice tab of the training site: a list of topic tasks and final tests on the left, and a simulated PowerFab Loads window with a completed task on the right"></button>
-            <figcaption><b>Practice</b><span>A Loads &amp; Dockets task in the PowerFab simulator, checked by itself.</span></figcaption>
+            <button class="shot" type="button"><img src="img/training_tabs.gif" width="689" height="406" loading="lazy" alt="Animation of the training demo: picking topics in the sidebar, then switching between the Topics, Practice, Model and Results tabs"></button>
+            <figcaption><b>Tour</b><span>Topics, Practice, Model and Results in the training demo.</span></figcaption>
           </figure>
         </div>
       </div>
@@ -3725,6 +3735,43 @@ K.register('training',function(r){root=r;reset();render()});
     v.addEventListener('pause',function(){ w.classList.remove('playing') });
     v.addEventListener('ended',function(){ w.classList.remove('playing') });
   });
+})();
+</script>
+<script>
+/* WiseEye tab: the clock-check table plays out a working day. Clock-ins appear in the morning,
+   clock-outs in the afternoon, then the missed ones are flagged. Loops while the tab is in view. */
+(function(){
+  var tbl=document.querySelector('#wiseeye-tool .ck-table'); if(!tbl) return;
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var top=document.querySelector('#wiseeye-tool .ck-top'), badge=top.querySelector('i');
+  var now=document.createElement('span'); now.className='ck-now'; now.innerHTML='<b>06:40</b> <em>Before shift</em>'; top.insertBefore(now,badge);
+  var rows=[].map.call(tbl.querySelectorAll('tbody tr'),function(tr){var c=tr.children;
+    function m(t){t=t.trim();return /^\d\d:\d\d$/.test(t)?(+t.slice(0,2))*60+(+t.slice(3)):null}
+    return {tr:tr,inC:c[2],outC:c[3],st:c[4],inT:m(c[2].textContent),outT:m(c[3].textContent),inS:c[2].textContent,outS:c[3].textContent,stH:c[4].innerHTML,miss:tr.classList.contains('miss')}});
+  /* real ms -> minutes of the day: slow through the morning, skip to the afternoon, slow again, then hold */
+  var P=[[0,400],[2600,432],[3600,440],[4400,905],[7000,945],[11500,945]], LOOP=11500;
+  function minAt(t){for(var i=1;i<P.length;i++) if(t<=P[i][0]){var a=P[i-1],b=P[i];return a[1]+(b[1]-a[1])*(t-a[0])/(b[0]-a[0])} return 945}
+  function hhmm(m){m=Math.floor(m);return ('0'+Math.floor(m/60)).slice(-2)+':'+('0'+m%60).slice(-2)}
+  function ping(td){td.classList.remove('ping');void td.offsetWidth;td.classList.add('ping')}
+  function reset(){ rows.forEach(function(r){r.inC.textContent='·';r.outC.textContent='·';r.st.innerHTML='<i class="wait">Not in yet</i>';r.tr.classList.remove('miss');r.done=r.out=false});
+    badge.style.opacity=0; now.className='ck-now'; }
+  var t0=0, raf=0, last=-1, ended=false;
+  function frame(ts){
+    if(!t0) t0=ts; var t=(ts-t0)%LOOP; if(t<last){reset();ended=false} last=t;
+    var m=minAt(t), phase=m<445?'Clocking in':m<900?'Shift running':m<944?'Clocking out':'End of day';
+    now.firstChild.textContent=hhmm(m); now.lastChild.textContent=phase;
+    rows.forEach(function(r){
+      if(!r.done&&r.inT!=null&&m>=r.inT){r.done=true;r.inC.textContent=r.inS;ping(r.inC);r.st.innerHTML='<i class="work">At work</i>'}
+      if(!r.out&&r.outT!=null&&m>=r.outT){r.out=true;r.outC.textContent=r.outS;ping(r.outC)}
+    });
+    if(!ended&&m>=945){ended=true;now.className='ck-now end';
+      rows.forEach(function(r){ if(r.inT==null) r.inC.textContent='—'; if(r.outT==null) r.outC.textContent='—'; r.st.innerHTML=r.stH; if(r.miss) r.tr.classList.add('miss') });
+      badge.style.opacity=1}
+    raf=requestAnimationFrame(frame);
+  }
+  function start(){ if(raf) return; reset(); t0=0; last=-1; ended=false; raf=requestAnimationFrame(frame) }
+  function stop(){ cancelAnimationFrame(raf); raf=0 }
+  if('IntersectionObserver' in window){ new IntersectionObserver(function(es){ es[0].isIntersecting?start():stop() },{threshold:0.3}).observe(tbl) } else start();
 })();
 </script>
 </body>
