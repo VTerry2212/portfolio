@@ -549,7 +549,6 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
   .contact-art.js.go .runner{opacity:1;transition:opacity .3s ease 2.6s;animation:ba-run 7s cubic-bezier(.65,0,.35,1) 2.8s infinite}
   .contact-art.js.go .hole{animation:ba-hole 7s ease-in-out 2.8s infinite}
   .contact-art.js.go .ba-float{transform-box:fill-box;transform-origin:center;animation:ba-float 6s ease-in-out 2s infinite}
-  .contact-art.js.go .ba-float.f3{animation-duration:7s;animation-delay:3s}
 }
 /* WiseEye tab: the daily clock-check table (sample data) */
 .ck-board{background:#1C2125;color:#E9ECEE;padding:16px 18px 18px;overflow-x:auto;border-bottom:1px solid var(--ink)}
@@ -1958,7 +1957,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
         <text class="pop" x="296" y="72" text-anchor="end" style="fill:#F0703A">6</text>
         <g text-anchor="middle"><text class="pop" x="50" y="208" style="fill:#F0703A">0</text><text class="pop" x="88" y="208" style="fill:#F0703A">200</text><text class="pop" x="240" y="208" style="fill:#F0703A">1000</text><text class="pop" x="392" y="208" style="fill:#F0703A">1800</text><text class="pop" x="430" y="208" style="fill:#F0703A">2000</text></g>
       </g></g>
-      <g class="ba-layer" data-depth="0.8"><g class="ba-float f3">
+      <g class="ba-layer" data-depth="0"><g class="ba-float f1">
         <g class="pop" fill="none" stroke="#F3F4F2" stroke-width="1.200" stroke-opacity=".8"><rect x="50" y="8" width="40" height="18" rx="2"/></g>
         <text class="pop" x="70" y="21" text-anchor="middle" style="font-weight:500">B12</text>
         <text class="pop" x="98" y="21" fill-opacity=".65">310UB40 × 2000 · 1 OFF</text>
@@ -3566,12 +3565,11 @@ K.register('training',function(r){root=r;reset();render()});
 })();
 </script>
 <script>
-/* Contact drawing: draw in once on scroll, then float; layers follow the pointer at different depths. */
+/* Contact drawing: draw in once on scroll, then float as one piece. */
 (function(){
   var art=document.getElementById('beam-art'); if(!art) return;
   if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   art.classList.add('js');
-  var step=0;
   [].forEach.call(art.querySelectorAll('.dr:not(.dim)'),function(e,i){e.style.setProperty('--d',(i*0.1)+'s')});
   [].forEach.call(art.querySelectorAll('.dr.dim'),function(e,i){e.style.setProperty('--d',(0.9+i*0.25)+'s')});
   [].forEach.call(art.querySelectorAll('.pop'),function(e,i){e.style.setProperty('--d',(1.5+i*0.07)+'s')});
@@ -3579,13 +3577,6 @@ K.register('training',function(r){root=r;reset();render()});
     var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ art.classList.add('go'); io.disconnect() } })},{threshold:0.35});
     io.observe(art);
   } else art.classList.add('go');
-  var sec=art.closest('section')||document.body, layers=[].slice.call(art.querySelectorAll('.ba-layer:not([data-depth="0"])'));
-  if(!(window.matchMedia&&matchMedia('(hover:hover)').matches)) return;
-  sec.addEventListener('pointermove',function(e){
-    var r=sec.getBoundingClientRect(), nx=(e.clientX-r.left)/r.width-.5, ny=(e.clientY-r.top)/r.height-.5;
-    layers.forEach(function(l){var d=+l.getAttribute('data-depth')||1; l.style.transform='translate('+(nx*18*d).toFixed(1)+'px,'+(ny*12*d).toFixed(1)+'px)'});
-  });
-  sec.addEventListener('pointerleave',function(){ layers.forEach(function(l){l.style.transform=''}) });
 })();
 </script>
 <script>
