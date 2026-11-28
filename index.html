@@ -570,6 +570,33 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
 }
 @keyframes ck-row{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:none}}
 .more-grid .mini.wide{grid-column:1/-1}
+/* Effort saved: step timeline and race (from the v2 sketches) */
+.sv-vis{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;align-items:start;background:var(--paper);padding:16px 18px;border-radius:10px}
+@media (max-width:860px){.sv-vis{grid-template-columns:minmax(0,1fr)}}
+.sv-vis .eyebrow{margin-bottom:8px}
+.tl-row{display:grid;grid-template-columns:112px minmax(0,1fr);gap:10px;align-items:center;margin:8px 0;font-size:14px}
+.tl-row>span{color:var(--muted);line-height:1.2}
+.tl-row>span b{display:block;font:700 19px/1.1 var(--f-display);color:var(--ink)}
+.tl-bar{display:flex;gap:2px;height:30px}
+.tl-bar i{display:flex;align-items:center;min-width:3px;border-radius:3px;overflow:hidden;transform-origin:left center;cursor:help}
+.tl-bar i.b{background:var(--c-before)}.tl-bar i.a{background:var(--c-after)}
+.tl-bar i span{padding:0 7px;font:500 11px/1 var(--f-mono);color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.race-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:2px}
+.race-h .eyebrow{margin:0}
+.race-trk{position:relative;height:24px;background:var(--zinc);border-radius:4px;overflow:hidden}
+.race-trk i{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:4px}
+.race-trk i.b{background:var(--c-before)}.race-trk i.a{background:var(--c-after)}
+.race-trk em{position:absolute;right:8px;top:50%;transform:translateY(-50%);font:500 11px/1 var(--f-mono);font-style:normal;color:#fff;white-space:nowrap}
+.race-clk{font:500 13px var(--f-mono);color:var(--muted);margin-top:4px;min-height:1.5em}
+@media (max-width:460px){.tl-row{grid-template-columns:86px minmax(0,1fr)}}
+@media (prefers-reduced-motion:no-preference){
+  .sv-vis .tl-bar i{transform:scaleX(0);transition:transform .7s cubic-bezier(.22,1,.36,1)}
+  .sv-vis.in .tl-bar i{transform:none}
+  .sv-vis.in .tl-bar i:nth-child(2){transition-delay:.12s}.sv-vis.in .tl-bar i:nth-child(3){transition-delay:.24s}
+  .sv-vis.in .tl-bar i:nth-child(4){transition-delay:.36s}.sv-vis.in .tl-bar i:nth-child(5){transition-delay:.48s}
+  .sv-vis.in .tl-bar i:nth-child(6){transition-delay:.6s}
+  .sv-vis.in .tl-row+.tl-row .tl-bar i{transition-delay:.8s}
+}
 /* NC Quote screenshots fan out from a stack as you scroll (from v2) */
 .feature-grid .shot{border-radius:8px;overflow:hidden;box-shadow:0 18px 40px rgba(28,33,37,.14)}
 .feature-grid>div{will-change:transform;position:relative}
@@ -1899,6 +1926,34 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
     h('p','sv-note',card,'Step times come from my own review of this job, done the old way and with the tool. The 30 sample '+T.many+' are simulated from those times, with every step varying by 1 to 20 percent.');
     h('div','sv-kpis',kp,'<div><span>Before</span><b>'+fmt(avg.tb)+'</b></div><div><span>With the tool</span><b>'+fmt(avg.ta)+'</b></div><div><span>Time saved</span><b>'+Math.round((1-avg.ta/avg.tb)*100)+'%</b></div><div><span>Over 30 '+T.many+'</span><b>'+Math.round(hours)+' hours</b></div>');
     h('div','sv-legend',kp,'<span><i style="background:var(--c-before);border-radius:2px"></i>Before the tool (whole bar)</span><span><i style="background:var(--c-after);border-radius:2px"></i>With the tool</span><span>Dashed lines are the averages</span>');
+    /* Step timeline on one time scale, and a race between the two ways (averages of the 30 samples) */
+    (function(){
+      var RMv=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var SHORT={stamp:{b:['Rename','Split by lot','Combine','Colours','Add stamp','Adjust every page'],a:['Export','Upload + check','Colours','Tool stamps','Review']},
+                 vacam:{b:['Import and fix errors','Split saw parts by hand'],a:['Viewer fixes + splits','Import','Review']}}[T.key];
+      var vis=h('div','sv-vis',root);
+      function segs(vals,names,steps,cls){return vals.map(function(v,k){var lab=v/avg.tb>0.06?names[k]:'';
+        return '<i class="'+cls+'" style="flex:'+v.toFixed(2)+'" title="'+(k+1)+'. '+steps[k][0].replace(/"/g,'&quot;')+': '+fmt(v)+'"><span>'+lab+'</span></i>'}).join('')}
+      vis.innerHTML='<div class="tl"><p class="eyebrow">Step timeline · same time scale</p>'+
+        '<div class="tl-row"><span>Before<b>'+fmt(avg.tb)+'</b></span><div class="tl-bar" style="width:100%">'+segs(avg.b,SHORT.b,T.before,'b')+'</div></div>'+
+        '<div class="tl-row"><span>With the tool<b>'+fmt(avg.ta)+'</b></span><div class="tl-bar" style="width:'+(avg.ta/avg.tb*100).toFixed(2)+'%">'+segs(avg.a,SHORT.a,T.after,'a')+'</div></div></div>'+
+        '<div class="race"><div class="race-h"><p class="eyebrow">Race · one '+T.one.toLowerCase()+', both ways at once</p><button type="button" class="replay race-go">Replay</button></div>'+
+        '<div class="tl-row"><span>Before</span><div class="race-trk"><i class="b"></i><em></em></div></div>'+
+        '<div class="tl-row"><span>With the tool</span><div class="race-trk"><i class="a"></i><em></em></div></div>'+
+        '<p class="race-clk">0 min elapsed</p></div>';
+      var fb=vis.querySelector('.race-trk i.b'), fa=vis.querySelector('.race-trk i.a'), em=vis.querySelectorAll('.race-trk em'), clk=vis.querySelector('.race-clk'), raf=0, D=4200;
+      function draw(m){
+        fb.style.width=Math.min(100,m/avg.tb*100).toFixed(2)+'%'; fa.style.width=Math.min(100,m/avg.ta*100).toFixed(2)+'%';
+        em[0].textContent=m>=avg.tb?'Done · '+fmt(avg.tb):''; em[1].textContent=m>=avg.ta?'Done · '+fmt(avg.ta):'';
+        clk.textContent=fmt(Math.min(m,avg.tb))+' elapsed'+(m>=avg.ta&&m<avg.tb?' · the tool is already done':m>=avg.tb?' · saved '+fmt(avg.tb-avg.ta):'');
+      }
+      function run(){ cancelAnimationFrame(raf); if(RMv){draw(avg.tb);return}
+        var t0=0; function f(now){ if(!t0)t0=now; var p=Math.min(1,(now-t0)/D); draw(p*avg.tb); if(p<1) raf=requestAnimationFrame(f) } raf=requestAnimationFrame(f) }
+      vis.querySelector('.race-go').addEventListener('click',run);
+      draw(0);
+      if('IntersectionObserver' in window&&!RMv){ var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ vis.classList.add('in'); run(); io.disconnect() } })},{threshold:0.4}); io.observe(vis) }
+      else { vis.classList.add('in'); draw(avg.tb) }
+    })();
     card=root;
     var W=1000,H=250,L=34,R=118,Tp=20,B=34, max=Math.max.apply(null,S.map(function(s){return s.tb})), step=max>90?30:15, top2=Math.ceil(max/step)*step, cw=(W-L-R)/N, bw=Math.min(20,cw-8);
     function x(i){return L+cw*(i+0.5)} function y(v){return Tp+(H-Tp-B)*(1-v/top2)}
