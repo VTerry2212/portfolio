@@ -681,6 +681,14 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
 }
 .hl-art.nc,.hl-art.ck{height:58%}
 @media (max-width:760px){.hl-art.nc,.hl-art.ck{height:44%}}
+/* Tool clips: big play button in the middle until the clip plays */
+.vwrap{position:relative;display:block}
+.vplay{position:absolute;left:50%;top:50%;width:84px;height:84px;margin:-42px 0 0 -42px;border:0;border-radius:50%;background:var(--hivis);color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 0 0 10px rgba(217,72,15,.22);transition:transform .25s ease,opacity .25s ease,box-shadow .25s ease}
+.vplay svg{width:38px;height:38px;fill:currentColor;margin-left:5px}
+.vplay:hover{transform:scale(1.08);box-shadow:0 0 0 14px rgba(217,72,15,.28)}
+.vplay:focus-visible{outline:3px solid #fff;outline-offset:4px}
+.vwrap.playing .vplay{opacity:0;pointer-events:none;transform:scale(.8)}
+@media (max-width:560px){.vplay{width:64px;height:64px;margin:-32px 0 0 -32px}.vplay svg{width:28px;height:28px}}
 /* NC Quote screenshots fan out from a stack as you scroll (from v2) */
 .feature-grid .shot{border-radius:8px;overflow:hidden;box-shadow:0 18px 40px rgba(28,33,37,.14)}
 .feature-grid>div{will-change:transform;position:relative}
@@ -1627,7 +1635,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
         </div>
         <div class="shots mid">
           <figure class="fig">
-            <video class="vid" src="img/stamp_demo.mp4" controls muted playsinline preload="none" style="aspect-ratio:1280/653" aria-label="Recording of the real PDF Stamp Tool, 52 second highlight"></video>
+            <div class="vwrap"><video class="vid" src="img/stamp_demo.mp4" controls muted playsinline preload="none" style="aspect-ratio:1280/653" aria-label="Recording of the real PDF Stamp Tool, 52 second highlight"></video><button type="button" class="vplay" aria-label="Play clip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button></div>
             <figcaption><b>Clip · 52 s</b><span>The real tool on a live job. The stamping step is sped up.</span></figcaption>
           </figure>
         </div>
@@ -1673,8 +1681,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
         </div>
         <div class="shots mid">
           <figure class="fig">
-            <video class="vid" src="img/sim3d.mp4" controls muted loop playsinline preload="none" style="aspect-ratio:960/540" aria-label="Recording of the 3D simulation in the real tool: a bar is fed into the laser machine, cut by the robot and sent on"></video>
-            <figcaption><b>Clip · 32 s</b><span>The 3D simulation in the real tool: a bar runs through the laser machine.</span></figcaption>
+            <div class="vwrap"><video class="vid" src="img/sim3d.mp4" controls muted loop playsinline preload="none" style="aspect-ratio:960/540" aria-label="Recording of the 3D simulation in the real tool: a bar is fed into the laser machine, cut by the robot and sent on"></video><button type="button" class="vplay" aria-label="Play clip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button></div>
           </figure>
         </div>
       </div>
@@ -3604,6 +3611,18 @@ K.register('training',function(r){root=r;reset();render()});
       var io=new IntersectionObserver(function(es){ if(es[0].isIntersecting&&fill()) io.disconnect() }); io.observe(also);
     }
     var t; window.addEventListener('resize',function(){ clearTimeout(t); t=setTimeout(fill,200) });
+  });
+})();
+</script>
+<script>
+/* Big play button on the tool clips: starts the clip, hides while playing, comes back when paused. */
+(function(){
+  [].forEach.call(document.querySelectorAll('.vwrap'),function(w){
+    var v=w.querySelector('video'), b=w.querySelector('.vplay'); if(!v||!b) return;
+    b.addEventListener('click',function(){ var p=v.play(); if(p&&p.catch) p.catch(function(){}) });
+    v.addEventListener('play',function(){ w.classList.add('playing') });
+    v.addEventListener('pause',function(){ w.classList.remove('playing') });
+    v.addEventListener('ended',function(){ w.classList.remove('playing') });
   });
 })();
 </script>
