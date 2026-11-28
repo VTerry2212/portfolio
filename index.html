@@ -94,7 +94,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
 .result{background:var(--hivis-soft);padding:12px 14px;border-left:4px solid var(--hivis)}
 .result strong{font-family:var(--f-display);font-size:24px;display:block;line-height:1.1}
 .shots{display:grid;gap:12px;align-content:start;min-width:0}
-.vid{width:100%;height:auto;display:block;border:1px solid var(--line);background:#111}
+.vid{width:100%;height:auto;display:block;border:1px solid var(--line);background:#000}
 .shot{display:block;padding:0;border:1px solid var(--line);background:var(--zinc);cursor:zoom-in;width:100%}
 .shot img{display:block;width:100%;height:auto}
 .h-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
@@ -1627,7 +1627,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
         </div>
         <div class="shots mid">
           <figure class="fig">
-            <video class="vid" src="img/stamp_demo.mp4" poster="img/stamp_poster.jpg" controls muted playsinline preload="metadata" aria-label="Recording of the real PDF Stamp Tool, 52 second highlight"></video>
+            <video class="vid" src="img/stamp_demo.mp4" controls muted playsinline preload="none" style="aspect-ratio:1280/653" aria-label="Recording of the real PDF Stamp Tool, 52 second highlight"></video>
             <figcaption><b>Clip · 52 s</b><span>The real tool on a live job. The stamping step is sped up.</span></figcaption>
           </figure>
         </div>
@@ -1673,7 +1673,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
         </div>
         <div class="shots mid">
           <figure class="fig">
-            <video class="vid" src="img/sim3d.mp4" poster="img/sim3d_poster.jpg" controls muted loop playsinline preload="metadata" aria-label="Recording of the 3D simulation in the real tool: a bar is fed into the laser machine, cut by the robot and sent on"></video>
+            <video class="vid" src="img/sim3d.mp4" controls muted loop playsinline preload="none" style="aspect-ratio:960/540" aria-label="Recording of the 3D simulation in the real tool: a bar is fed into the laser machine, cut by the robot and sent on"></video>
             <figcaption><b>Clip · 32 s</b><span>The 3D simulation in the real tool: a bar runs through the laser machine.</span></figcaption>
           </figure>
         </div>
