@@ -1376,22 +1376,41 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
 .tr-gstep.now{background:#EEF4FB;border-color:var(--tb)}
 .tr-gstep.now i{background:var(--tb);color:#fff}
 .tr-gstep.done i{background:var(--tg);color:#fff}
-.tr-guide.tr-pop{position:fixed;z-index:40;left:50%;bottom:22px;transform:translateX(-50%);width:min(640px,calc(100vw - 32px));background:#fff;border:1px solid var(--tl);border-left:1px solid var(--tl);border-radius:14px;box-shadow:0 18px 50px rgba(6,10,16,.38);padding:14px 16px 16px;gap:10px}
-.tr-pop::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:4px;border-radius:0 4px 4px 0;background:var(--tb)}
-.tr-ph{display:flex;align-items:center;gap:10px;min-width:0}
-.tr-pk{flex:none;font:800 11px/1 Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;background:var(--tb);color:#fff;padding:6px 9px;border-radius:999px}
-.tr-ph b{flex:1;min-width:0;font-size:16px;color:#10233D}
-.tr-px{flex:none;border:0;background:#F1F4F8;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:13px;color:#10233D}
-.tr-px:hover{background:#E2E8F0}
-.tr-pl{margin:0;font-size:14.5px;font-weight:600;color:#10233D}
-.tr-pop .tr-gsteps{gap:6px}
-.tr-pop .tr-gstep{padding:6px 8px;gap:7px}
-.tr-pop .tr-gstep i{width:22px;height:22px;font-size:11px}
-.tr-pop .tr-gstep b{font-size:12.5px}
-.tr-main:has(.tr-pop){padding-bottom:180px}
-@keyframes tr-pop-in{from{opacity:0;transform:translate(-50%,18px)}to{opacity:1;transform:translateX(-50%)}}
-@media (prefers-reduced-motion:no-preference){.tr-pop.in{animation:tr-pop-in .45s cubic-bezier(.22,1,.36,1)}}
-@media (max-width:640px){.tr-pop .tr-gstep span{display:none}.tr-pop .tr-gstep{justify-content:center}.tr-guide.tr-pop{bottom:86px}}
+/* guide: welcome card, then a coach bubble next to the control to use */
+.tr-intro{position:fixed;z-index:42;left:50%;top:50%;transform:translate(-50%,-50%);width:min(540px,calc(100vw - 32px));background:#fff;border-radius:18px;box-shadow:0 30px 80px rgba(6,10,16,.45);padding:28px 26px 22px;text-align:center;color:#10233D}
+.tr-ie{margin:0;font:700 11.5px/1 Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--tb)}
+.tr-intro h3{margin:8px 0 20px;font-size:28px;line-height:1.1}
+.tr-irow{list-style:none;margin:0 0 24px;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;position:relative}
+.tr-irow::before{content:"";position:absolute;left:10%;right:10%;top:27px;height:2px;background:#D5DCE4}
+.tr-irow li{position:relative;display:grid;justify-items:center;gap:8px;font-size:13.5px;font-weight:700}
+.tr-irow span{position:relative;width:56px;height:56px;border-radius:50%;background:#EEF4FB;border:2px solid #D5DCE4;display:grid;place-items:center}
+.tr-irow li:first-child span{background:var(--tb);border-color:var(--tb)}
+.tr-irow i{font-style:normal;font-size:22px;line-height:1}
+.tr-irow b{position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;background:#10233D;color:#fff;font:800 11.5px/22px Arial,sans-serif}
+.tr-istart{display:block;width:100%;border:0;border-radius:12px;background:var(--tb);color:#fff;font:800 17px Arial,sans-serif;padding:15px;cursor:pointer}
+.tr-istart:hover{filter:brightness(1.08)}
+.tr-iskip{margin-top:10px;border:0;background:none;color:var(--tm);font:600 14px Arial,sans-serif;cursor:pointer;text-decoration:underline}
+.tr-coach{position:fixed;z-index:40;width:min(340px,calc(100vw - 24px));background:#10233D;color:#fff;border-radius:14px;box-shadow:0 16px 40px rgba(6,10,16,.45);padding:12px 14px 14px;display:grid;gap:8px}
+.tr-coach.free{left:50%;bottom:22px;transform:translateX(-50%)}
+.tr-crow{display:flex;align-items:center;gap:10px}
+.tr-dots{display:flex;gap:6px}
+.tr-dot{width:11px;height:11px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer}
+.tr-dot:disabled{cursor:default}
+.tr-dot.done{background:#2BB673}
+.tr-dot.now{background:#F2A900;box-shadow:0 0 0 3px rgba(242,169,0,.3)}
+.tr-cn{flex:1;font:700 11.5px/1 Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.65)}
+.tr-coach .tr-px{width:26px;height:26px;background:rgba(255,255,255,.12);color:#fff}
+.tr-coach .tr-px:hover{background:rgba(255,255,255,.22)}
+.tr-cmsg{margin:0;font-size:17px;font-weight:700;line-height:1.3}
+.tr-cgo{justify-self:start;border:0;border-radius:999px;background:#F2A900;color:#10233D;font:800 14.5px Arial,sans-serif;padding:9px 16px;cursor:pointer}
+.tr-coach .tr-cgo.tr-next{outline:none}
+.tr-carr{display:none;position:absolute;left:var(--ax,40px);width:16px;height:16px;margin-left:-8px;background:#10233D;transform:rotate(45deg)}
+.tr-coach.up .tr-carr{display:block;top:-7px}
+.tr-coach.down .tr-carr{display:block;bottom:-7px}
+.tr-main:has(.tr-coach.free){padding-bottom:150px}
+@keyframes tr-coach-in{from{opacity:0;translate:0 10px}to{opacity:1;translate:0 0}}
+@media (prefers-reduced-motion:no-preference){.tr-coach.in{animation:tr-coach-in .4s cubic-bezier(.22,1,.36,1)}.tr-dot.now{animation:tr-pulse 1.4s ease-out infinite}}
+@media (max-width:560px){.tr-irow li{font-size:11.5px}.tr-irow span{width:44px;height:44px}.tr-irow::before{top:21px}.tr-intro h3{font-size:23px}}
 .tr-gline{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;justify-content:space-between;font-size:14.5px;font-weight:600;color:#10233D}
 .tr-next{outline:3px solid #F2A900;outline-offset:3px;border-radius:6px}
 @keyframes tr-pulse{0%{box-shadow:0 0 0 0 rgba(242,169,0,.55)}100%{box-shadow:0 0 0 12px rgba(242,169,0,0)}}
@@ -3340,7 +3359,7 @@ function stopTimer(){ if(timer){clearInterval(timer);timer=null} }
 function newSt(){var d={};ASM.forEach(function(a){d[a.m]=2});return {station:'',pick:{},done:d,hint:'',t0:null,sec:null}}   /* every assembly starts cut and fitted */
 function newLd(){var c={};ASM.forEach(function(a){c[a.m]='Shop'});return {loads:[],sel:null,dlg:null,form:{top:'',from:'Shop',to:''},pick:{},loc:c,hint:'',docket:null,t0:null,sec:null}}
 function newQuiz(){return {i:0,ans:[],left:TL,on:false,done:false}}
-function reset(){ stopTimer(); S={view:'topic',id:'status',read:{},quick:{},st:newSt(),ld:newLd(),quiz:newQuiz(),guide:true,seen:false,chat:{open:false,busy:false,msgs:[{w:'a',t:'Hi, I’m the Chatbot AI Agent. Ask me about this module while you practise.'}]}}; M.sel=null }
+function reset(){ stopTimer(); S={view:'topic',id:'status',read:{},quick:{},st:newSt(),ld:newLd(),quiz:newQuiz(),guide:true,intro:true,seen:false,chat:{open:false,busy:false,msgs:[{w:'a',t:'Hi, I’m the Chatbot AI Agent. Ask me about this module while you practise.'}]}}; M.sel=null }
 function asm(m){for(var i=0;i<ASM.length;i++) if(ASM[i].m===m) return ASM[i]}
 function kg(Ld){return Ld.items.reduce(function(s,m){return s+asm(m).kg},0)}
 function dot(ok){return '<i class="tr-dot'+(ok?' ok':'')+'">'+(ok?'✓':'')+'</i>'}
@@ -3392,21 +3411,38 @@ function ldNext(){var l=S.ld,a=l.loads[0],b=l.loads[1],st=ldSteps();
   if(!st[3]) return l.sel===1?['#tr-add','press Add Material and tick C1-1.']:['[data-load="1"]','click Load 2 to select it.'];
   return ['.tr-done button','press Go to the test.'] }
 /* what to do now: [selector of the control to light, sentence] */
+function cap(t){return t.charAt(0).toUpperCase()+t.slice(1)}
 function nextUp(){ var n=gStep(), here=function(v,id){return S.view===v&&(!id||S.id===id)}, lit='.tr-gstep.now';
-  if(n===1) return here('topic','status')?['.tr-quick','Read the three steps, then answer the quick check.']:[lit,'Click step 1 to open the topic.'];
-  if(n===2){ if(!here('task','status')) return [lit,'Click step 2 to open the practice task.']; var x=stNext(); return [x[0],'Next: '+x[1]] }
-  if(n===3){ if(!S.read.loads) return here('topic','loads')?['.tr-quick','Read the steps, then answer the quick check.']:[lit,'Click step 3 to open topic 06.'];
-    if(!here('task','loads')) return [lit,'Click step 3 to open the practice task.']; var y=ldNext(); return [y[0],'Next: '+y[1]] }
-  if(n===4) return here('test')?(S.quiz.on?['.tr-opts','Answer before the clock runs out.']:['#tr-start','Press Start the test.']):[lit,'Click step 4 to open the test.'];
-  if(n===5) return [lit,'Click step 5 to see your results and the team view.'];
-  return [null,'All five steps are done. Try Start again on a task, turn the model, or ask the chatbot a question.'] }
-var lastG=0;   /* step number shown last time, so the pop-up only slides in when the step changes */
-function guideHTML(){ var n=gStep(), d=gDone(), fin=n>5;
-  var h='<div class="tr-guide tr-pop'+(n!==lastG?' in':'')+'" role="dialog" aria-label="Demo steps"><div class="tr-ph"><span class="tr-pk">'+(fin?'All done':'Step '+n+' of 5')+'</span><b>'+(fin?'All five steps are done':esc(GST[n-1][0]))+'</b><button type="button" class="tr-px" id="tr-gh" aria-label="Hide the steps" title="Hide the steps">✕</button></div>'+
-    '<p class="tr-pl" role="status">'+esc(nextUp()[1])+'</p><div class="tr-gsteps">';
-  GST.forEach(function(s,i){var k=i+1,c=d[i]?' done':k===n?' now':'';
-    h+='<button type="button" class="tr-gstep'+c+'" data-g="'+k+'"'+(k<=n?'':' disabled')+' title="'+esc(s[0]+' · '+s[1])+'"><i>'+(d[i]?'✓':k)+'</i><span><b>'+s[0]+'</b></span></button>'});
-  lastG=n; return h+'</div></div>';
+  if(n===1) return here('topic','status')?['.tr-quick','Answer the quick check.']:[lit,'Open the topic.'];
+  if(n===2){ if(!here('task','status')) return [lit,'Open the practice task.']; var x=stNext(); return [x[0],cap(x[1])] }
+  if(n===3){ if(!S.read.loads) return here('topic','loads')?['.tr-quick','Answer the quick check.']:[lit,'Open topic 06.'];
+    if(!here('task','loads')) return [lit,'Open the practice task.']; var y=ldNext(); return [y[0],cap(y[1])] }
+  if(n===4) return here('test')?(S.quiz.on?['.tr-opts','Answer before the clock runs out.']:['#tr-start','Press Start the test.']):[lit,'Open the test.'];
+  if(n===5) return [lit,'See your results.'];
+  return [null,'All done! Try a task again, turn the model or ask the chatbot.'] }
+var lastG=0, lastMsg='';   /* to scroll to the target and pop the bubble only when the step or message changes */
+var GI=[['📖','Read'],['✍️','Sign off'],['🚚','Load'],['⏱️','Test'],['📊','Results']];
+function guideHTML(){
+  if(S.intro) return '<div class="tr-intro" role="dialog" aria-labelledby="tr-it"><p class="tr-ie">Demo · about 3 minutes</p><h3 id="tr-it">Try it in 5 steps</h3><ol class="tr-irow">'+
+    GI.map(function(g,i){return '<li><span><b>'+(i+1)+'</b><i aria-hidden="true">'+g[0]+'</i></span>'+g[1]+'</li>'}).join('')+
+    '</ol><button type="button" class="tr-istart" id="tr-gstart">Start step 1 →</button><button type="button" class="tr-iskip" id="tr-gskip">Explore on my own</button></div>';
+  var n=gStep(), d=gDone(), u=nextUp(), fin=n>5, pop=(n!==lastG||u[1]!==lastMsg);
+  var h='<div class="tr-coach'+(pop?' in':'')+'" role="status"><div class="tr-crow"><span class="tr-dots">';
+  GST.forEach(function(s,i){var k=i+1,c=d[i]?' done':k===n?' now':''; h+='<button type="button" class="tr-dot'+c+'" data-g="'+k+'"'+(k<=n?'':' disabled')+' title="'+(k)+'. '+esc(s[0])+'" aria-label="Step '+k+': '+esc(s[0])+'"></button>'});
+  h+='</span><span class="tr-cn">'+(fin?'Done':'Step '+n+' of 5')+'</span><button type="button" class="tr-px" id="tr-gh" aria-label="Hide the guide" title="Hide the guide">✕</button></div>'+
+    '<p class="tr-cmsg">'+esc(u[1])+'</p>'+(u[0]==='.tr-gstep.now'?'<button type="button" class="tr-gstep now tr-cgo" data-g="'+n+'">'+esc(u[1].replace(/\.$/,''))+' →</button>':'')+'<span class="tr-carr" aria-hidden="true"></span></div>';
+  lastG=n; lastMsg=u[1]; return h;
+}
+/* put the bubble next to the control it talks about: below it if there is room, else above; otherwise at the bottom */
+function placeCoach(){
+  var c=root.querySelector('.tr-coach'); if(!c) return; var t=root.querySelector('.tr-next');
+  if(t&&c.contains(t)) t=null;
+  var W=innerWidth, H=innerHeight, w=c.offsetWidth, hgt=c.offsetHeight, r=t?t.getBoundingClientRect():null, gap=16, y=null, side='';
+  if(r&&r.bottom>0&&r.top<H){ if(r.bottom+gap+hgt<H-8){y=r.bottom+gap;side='up'} else if(r.top-gap-hgt>8){y=r.top-gap-hgt;side='down'} }
+  c.classList.toggle('free',y==null); c.classList.toggle('up',side==='up'); c.classList.toggle('down',side==='down');
+  if(y==null){ c.style.left=''; c.style.top=''; return }
+  var cx=Math.min(r.right-24,r.left+Math.min(r.width/2,180)), x=Math.max(12,Math.min(W-w-12,cx-w/2));
+  c.style.left=x+'px'; c.style.top=y+'px'; c.style.setProperty('--ax',Math.max(18,Math.min(w-18,cx-x))+'px');
 }
 
 /* ---- 3D model of the five assemblies, coloured by status (a small canvas renderer, no library) ---- */
@@ -3558,14 +3594,17 @@ function results(){
 function render(){
   var m=S.view==='topic'?topic():S.view==='task'?(S.id==='status'?taskStatus():taskLoads()):S.view==='test'?test():S.view==='model'?modelPage():results();
   root.innerHTML='<div class="tr">'+side()+'<div class="tr-main">'+(S.guide?guideHTML():'')+m+'</div></div>'+chatHTML(); bind();
-  var up=S.guide?nextUp()[0]:null, el=up?root.querySelector(up):null; if(el) el.classList.add('tr-next');
+  var up=S.guide&&!S.intro?nextUp()[0]:null, el=up?root.querySelector(up):null; if(el) el.classList.add('tr-next');
+  if(el&&!el.closest('.tr-coach')&&root.querySelector('.tr-coach.in')){ var sc0=$('dm-scroll'), er=el.getBoundingClientRect(); if(sc0&&(er.top<80||er.bottom>innerHeight-180)) sc0.scrollTop+=er.top-innerHeight*0.32 }
+  placeCoach(); if(!placeCoach.on){ placeCoach.on=1; var scx=$('dm-scroll'); if(scx) scx.addEventListener('scroll',function(){requestAnimationFrame(placeCoach)},{passive:true}); window.addEventListener('resize',function(){requestAnimationFrame(placeCoach)}) }
   drawModel(); if(M.auto&&!M.raf&&!K.RM) M.raf=requestAnimationFrame(spin);
   var cb=$('tr-cb'); if(cb) cb.scrollTop=cb.scrollHeight;
-  K.spot(function(){ if(!S||!S.guide||gStep()>5||$('demo-training').hidden) return null;
-    var a=[root.querySelector('.tr-guide'),root.querySelector('.tr-next')];   /* the Weldon button and chat sit above the dim layer */
+  K.spot(function(){ if(!S||!S.guide||$('demo-training').hidden) return null;
+    if(S.intro) return [root.querySelector('.tr-intro')]; if(gStep()>5) return null;
+    var a=[root.querySelector('.tr-coach'),root.querySelector('.tr-next')];   /* the Weldon button and chat sit above the dim layer */
     [].forEach.call(root.querySelectorAll('.tr-page,.tr-task,.tr-model,.tr-dlg'),function(x){a.push(x)}); return a });
 }
-function go(view,id){ S.view=view; if(id) S.id=id; if(view==='results'&&S.quiz.done) S.seen=true; render(); var sc=$('dm-scroll'); if(sc) sc.scrollTop=0 }
+function go(view,id){ S.view=view; if(id) S.id=id; if(view==='results'&&S.quiz.done) S.seen=true; var sc=$('dm-scroll'); if(sc) sc.scrollTop=0; render() }
 function finishQuiz(){ stopTimer(); S.quiz.on=false; S.quiz.done=true; render() }
 function on(id,fn){var e=$(id); if(e) e.onclick=fn}
 function each(sel,fn){root.querySelectorAll(sel).forEach(fn)}
@@ -3578,7 +3617,8 @@ function bind(){
   each('[data-topic]',function(b){b.onclick=function(){go('topic',b.getAttribute('data-topic'))}});
   on('tr-reset',function(){reset();render()});
   each('[data-g]',function(b){b.onclick=function(){gGo(+b.getAttribute('data-g'))}});
-  on('tr-gh',function(){S.guide=false;render()}); on('tr-guide',function(){S.guide=true;render()});
+  on('tr-gh',function(){S.guide=false;render()}); on('tr-guide',function(){S.guide=true;S.intro=false;render()});
+  on('tr-gstart',function(){S.intro=false;go('topic','status')}); on('tr-gskip',function(){S.intro=false;S.guide=false;render()});
   /* model */
   var cv=$('tr-model'); if(cv){ var drag=null;
     cv.onpointerdown=function(e){M.auto=false;drag={x:e.clientX,y:e.clientY,yaw:M.yaw,pitch:M.pitch,moved:0};try{cv.setPointerCapture(e.pointerId)}catch(x){}};
