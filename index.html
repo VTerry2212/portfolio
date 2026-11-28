@@ -527,6 +527,31 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
   .hl-grid.js .wise.in .wb-table .miss td{animation:wb-flash 1.2s ease 1.3s 2}
 }
 @media (max-width:760px){.hl-grid{grid-auto-rows:auto}.hl-card{height:300px}.hl-card.wise{height:356px}.wise-board{padding:52px 14px 0}.wb-table{font-size:11.5px}.wb-table td,.wb-table th{padding:5px 6px}}
+/* Contact drawing (from v2's footer shapes): lines draw in, labels pop, layers float and follow the pointer */
+.contact-art{overflow:visible}
+.contact-art .ba-layer{transition:transform 1.2s cubic-bezier(.22,1,.36,1)}
+.contact-art .runner{opacity:0}
+@keyframes ba-float{50%{transform:translateY(-5px) rotate(-.6deg)}}
+@keyframes ba-run{0%,8%{transform:translateX(0)}22%,30%{transform:translateX(38px)}46%,54%{transform:translateX(190px)}70%,78%{transform:translateX(342px)}92%,100%{transform:translateX(380px);opacity:1}}
+@keyframes ba-cl{to{stroke-dashoffset:-27}}
+@keyframes ba-ai{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes ba-hole{0%,100%{stroke:#F3F4F2}50%{stroke:#F0703A}}
+@media (prefers-reduced-motion:no-preference){
+  .contact-art.js .dr{stroke-dasharray:1;stroke-dashoffset:1}
+  .contact-art.js.go .dr{stroke-dashoffset:0;transition:stroke-dashoffset 1.3s cubic-bezier(.65,0,.35,1) var(--d,0s)}
+  .contact-art.js .pop{opacity:0;transform:scale(.2);transform-box:fill-box;transform-origin:center}
+  .contact-art.js.go .pop{opacity:1;transform:none;transition:opacity .4s ease var(--d,0s),transform .8s cubic-bezier(.34,1.56,.64,1) var(--d,0s)}
+  .contact-art.js .cl{opacity:0}
+  .contact-art.js.go .cl{opacity:.35;transition:opacity 1s ease .6s;animation:ba-cl 2.4s linear infinite}
+  .contact-art.js .ba-cta{opacity:0;transform:translateY(8px)}
+  .contact-art.js.go .ba-cta{opacity:1;transform:none;transition:opacity .8s ease 2.4s,transform .8s cubic-bezier(.22,1,.36,1) 2.4s}
+  .contact-art.js.go .ai{animation:ba-ai 2.2s ease-in-out 3.4s infinite}
+  .contact-art.js.go .runner{opacity:1;transition:opacity .3s ease 2.6s;animation:ba-run 7s cubic-bezier(.65,0,.35,1) 2.8s infinite}
+  .contact-art.js.go .hole{animation:ba-hole 7s ease-in-out 2.8s infinite}
+  .contact-art.js.go .ba-float{transform-box:fill-box;transform-origin:center;animation:ba-float 6s ease-in-out 2s infinite}
+  .contact-art.js.go .ba-float.f2{animation-duration:5s;animation-delay:2.6s}
+  .contact-art.js.go .ba-float.f3{animation-duration:7s;animation-delay:3s}
+}
 /* NC Quote screenshots fan out from a stack as you scroll (from v2) */
 .feature-grid .shot{border-radius:8px;overflow:hidden;box-shadow:0 18px 40px rgba(28,33,37,.14)}
 .feature-grid>div{will-change:transform;position:relative}
@@ -1670,31 +1695,39 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
         <div><span class="k"><svg class="k-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.500s-6.500-6.300-6.500-11.300a6.500 6.500 0 0 1 13 0c0 5-6.500 11.300-6.500 11.300z"/><circle cx="12" cy="10" r="2.300"/></svg>Based in</span><span>Ho Chi Minh City, Vietnam</span></div>
       </div>
     </div>
-    <svg class="contact-art" viewBox="0 0 480 240" aria-hidden="true" focusable="false">
+    <svg class="contact-art" id="beam-art" viewBox="0 0 480 240" aria-hidden="true" focusable="false">
       <!-- A 310UB40 beam, 2000 long, drawn to one scale (0.19 px per mm): 304 deep, end plates, a stiffener at 1000,
-           one line of two holes 200 from each end. Running dimensions go to each hole line from the LH end. -->
-      <g fill="none" stroke="#F3F4F2" stroke-width="1.300" opacity=".85">
-        <rect x="53" y="91" width="374" height="3"/><rect x="53" y="146" width="374" height="3"/>
-        <rect x="50" y="86" width="3" height="68"/><rect x="427" y="86" width="3" height="68"/>
-        <rect x="238.750" y="94" width="2.500" height="52"/>
-        <circle cx="88" cy="106.700" r="2.600"/><circle cx="88" cy="133.300" r="2.600"/>
-        <circle cx="392" cy="106.700" r="2.600"/><circle cx="392" cy="133.300" r="2.600"/>
-      </g>
-      <path d="M30 120H450" fill="none" stroke="#F3F4F2" stroke-width="1" stroke-dasharray="16 4 3 4" opacity=".35"/>
-      <g fill="none" stroke="#F0703A" stroke-width="1.300">
-        <path d="M50 80V36M430 80V36M50 44H430"/><path d="M50 44l9-3.500v7zM430 44l-9-3.500v7z" fill="#F0703A"/>
-        <path d="M50 160v34M88 160v34M240 160v34M392 160v34M430 160v34M50 188H430"/>
-        <circle cx="50" cy="188" r="3.500" fill="#1C2125"/>
-        <path d="M88 188l-8-3v6zM240 188l-8-3v6zM392 188l-8-3v6zM430 188l-8-3v6z" fill="#F0703A"/>
-        <path d="M241 94L286 60H346M300 60V72L312 60"/><path d="M241 94L250 91L246.400 86.200Z" fill="#F0703A"/>
-      </g>
-      <g fill="none" stroke="#F3F4F2" stroke-width="1.200" opacity=".8"><rect x="50" y="8" width="40" height="18" rx="2"/></g>
-      <text x="70" y="21" text-anchor="middle" style="font-weight:500">B12</text>
-      <text x="98" y="21" opacity=".65">310UB40 × 2000 · 1 OFF</text>
-      <text x="240" y="38" text-anchor="middle" style="fill:#F0703A">2000</text>
-      <text x="296" y="72" text-anchor="end" style="fill:#F0703A">6</text>
-      <g text-anchor="middle"><text x="50" y="208" style="fill:#F0703A">0</text><text x="88" y="208" style="fill:#F0703A">200</text><text x="240" y="208" style="fill:#F0703A">1000</text><text x="392" y="208" style="fill:#F0703A">1800</text><text x="430" y="208" style="fill:#F0703A">2000</text></g>
-      <text x="50" y="230" style="font-size:10px;letter-spacing:.08em"><tspan opacity=".6">NEED AN </tspan><tspan style="fill:#F0703A;font-weight:700">AI AGENT</tspan><tspan opacity=".6"> FOR YOUR WORKSHOP? ASK ME</tspan></text>
+           one line of two holes 200 from each end. Running dimensions go to each hole line from the LH end.
+           Layers: beam, dimensions and the mark tag move at different depths with the pointer; lines draw in on scroll. -->
+      <g class="ba-layer" data-depth="0.5"><g class="ba-float f1">
+        <g fill="none" stroke="#F3F4F2" stroke-width="1.300" opacity=".85">
+          <rect class="dr" pathLength="1" x="53" y="91" width="374" height="3"/><rect class="dr" pathLength="1" x="53" y="146" width="374" height="3"/>
+          <rect class="dr" pathLength="1" x="50" y="86" width="3" height="68"/><rect class="dr" pathLength="1" x="427" y="86" width="3" height="68"/>
+          <rect class="dr" pathLength="1" x="238.750" y="94" width="2.500" height="52"/>
+          <circle class="dr hole" pathLength="1" cx="88" cy="106.700" r="2.600"/><circle class="dr hole" pathLength="1" cx="88" cy="133.300" r="2.600"/>
+          <circle class="dr hole" pathLength="1" cx="392" cy="106.700" r="2.600"/><circle class="dr hole" pathLength="1" cx="392" cy="133.300" r="2.600"/>
+        </g>
+        <path class="cl" d="M30 120H450" fill="none" stroke="#F3F4F2" stroke-width="1" stroke-dasharray="16 4 3 4" opacity=".35"/>
+      </g></g>
+      <g class="ba-layer" data-depth="1.2"><g class="ba-float f2">
+        <g fill="none" stroke="#F0703A" stroke-width="1.300">
+          <path class="dr dim" pathLength="1" d="M50 80V36M430 80V36M50 44H430"/><path class="pop" d="M50 44l9-3.500v7zM430 44l-9-3.500v7z" fill="#F0703A"/>
+          <path class="dr dim" pathLength="1" d="M50 160v34M88 160v34M240 160v34M392 160v34M430 160v34M50 188H430"/>
+          <circle cx="50" cy="188" r="3.500" fill="#1C2125"/>
+          <path class="pop" d="M88 188l-8-3v6zM240 188l-8-3v6zM392 188l-8-3v6zM430 188l-8-3v6z" fill="#F0703A"/>
+          <path class="dr dim" pathLength="1" d="M241 94L286 60H346M300 60V72L312 60"/><path class="pop" d="M241 94L250 91L246.400 86.200Z" fill="#F0703A"/>
+        </g>
+        <circle class="runner" cx="50" cy="188" r="3.200" fill="#F0703A"/>
+        <text class="pop" x="240" y="38" text-anchor="middle" style="fill:#F0703A">2000</text>
+        <text class="pop" x="296" y="72" text-anchor="end" style="fill:#F0703A">6</text>
+        <g text-anchor="middle"><text class="pop" x="50" y="208" style="fill:#F0703A">0</text><text class="pop" x="88" y="208" style="fill:#F0703A">200</text><text class="pop" x="240" y="208" style="fill:#F0703A">1000</text><text class="pop" x="392" y="208" style="fill:#F0703A">1800</text><text class="pop" x="430" y="208" style="fill:#F0703A">2000</text></g>
+      </g></g>
+      <g class="ba-layer" data-depth="0.8"><g class="ba-float f3">
+        <g class="pop" fill="none" stroke="#F3F4F2" stroke-width="1.200" stroke-opacity=".8"><rect x="50" y="8" width="40" height="18" rx="2"/></g>
+        <text class="pop" x="70" y="21" text-anchor="middle" style="font-weight:500">B12</text>
+        <text class="pop" x="98" y="21" fill-opacity=".65">310UB40 × 2000 · 1 OFF</text>
+      </g></g>
+      <text class="ba-cta" x="50" y="230" style="font-size:10px;letter-spacing:.08em"><tspan opacity=".6">NEED AN </tspan><tspan class="ai" style="fill:#F0703A;font-weight:700">AI AGENT</tspan><tspan opacity=".6"> FOR YOUR WORKSHOP? ASK ME</tspan></text>
     </svg>
   </section>
 
@@ -3294,6 +3327,29 @@ K.register('training',function(r){root=r;reset();render()});
   window.addEventListener('hashchange',function(){ cur=goal=target(); apply(cur) });
   document.getElementById('tabs').addEventListener('click',function(){ setTimeout(function(){cur=goal=target();apply(cur)},0) });
   cur=goal=target(); apply(cur);
+})();
+</script>
+<script>
+/* Contact drawing: draw in once on scroll, then float; layers follow the pointer at different depths. */
+(function(){
+  var art=document.getElementById('beam-art'); if(!art) return;
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  art.classList.add('js');
+  var step=0;
+  [].forEach.call(art.querySelectorAll('.dr:not(.dim)'),function(e,i){e.style.setProperty('--d',(i*0.1)+'s')});
+  [].forEach.call(art.querySelectorAll('.dr.dim'),function(e,i){e.style.setProperty('--d',(0.9+i*0.25)+'s')});
+  [].forEach.call(art.querySelectorAll('.pop'),function(e,i){e.style.setProperty('--d',(1.5+i*0.07)+'s')});
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ art.classList.add('go'); io.disconnect() } })},{threshold:0.35});
+    io.observe(art);
+  } else art.classList.add('go');
+  var sec=art.closest('section')||document.body, layers=[].slice.call(art.querySelectorAll('.ba-layer'));
+  if(!(window.matchMedia&&matchMedia('(hover:hover)').matches)) return;
+  sec.addEventListener('pointermove',function(e){
+    var r=sec.getBoundingClientRect(), nx=(e.clientX-r.left)/r.width-.5, ny=(e.clientY-r.top)/r.height-.5;
+    layers.forEach(function(l){var d=+l.getAttribute('data-depth')||1; l.style.transform='translate('+(nx*18*d).toFixed(1)+'px,'+(ny*12*d).toFixed(1)+'px)'});
+  });
+  sec.addEventListener('pointerleave',function(){ layers.forEach(function(l){l.style.transform=''}) });
 })();
 </script>
 </body>
