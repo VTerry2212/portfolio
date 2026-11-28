@@ -503,6 +503,30 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
   .hl-grid.js .hl-card{opacity:0;transform:translateY(70px);transition:opacity .9s ease,transform 1.1s cubic-bezier(.22,1,.36,1)}
   .hl-grid.js .hl-card.in{opacity:1;transform:none}
 }
+/* WiseEye card: a small daily clock-check table (sample data) */
+.hl-card.wise{background:#1C2125}
+.wise-board{padding:54px 18px 0;color:#E9ECEE}
+.wb-head{display:flex;justify-content:space-between;gap:10px;font:500 10.5px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:8px}
+.wb-table{width:100%;border-collapse:collapse;font:500 12.5px/1.2 var(--f-mono);font-variant-numeric:tabular-nums;transition:transform 1.2s cubic-bezier(.22,1,.36,1);transform-origin:50% 0}
+.wb-table th{text-align:left;font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5);padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.16)}
+.wb-table td{padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.07);white-space:nowrap}
+.wb-table .miss td{background:rgba(217,72,15,.18)}
+.wb-table i{font-style:normal}
+.wb-table i.ok{color:#7EE2A8}
+.wb-table i.no{color:#fff;background:var(--hivis);padding:2px 8px;border-radius:999px;font-size:11px}
+.hl-card.wise:hover .wb-table{transform:scale(1.03)}
+@keyframes wb-flash{0%,100%{background:rgba(217,72,15,.18)}50%{background:rgba(217,72,15,.5)}}
+@media (prefers-reduced-motion:no-preference){
+  .hl-grid.js .wise .wb-table tbody tr{opacity:0;transform:translateX(-16px);transition:opacity .5s ease,transform .6s cubic-bezier(.22,1,.36,1)}
+  .hl-grid.js .wise.in .wb-table tbody tr{opacity:1;transform:none}
+  .hl-grid.js .wise.in .wb-table tbody tr:nth-child(1){transition-delay:.35s}
+  .hl-grid.js .wise.in .wb-table tbody tr:nth-child(2){transition-delay:.47s}
+  .hl-grid.js .wise.in .wb-table tbody tr:nth-child(3){transition-delay:.59s}
+  .hl-grid.js .wise.in .wb-table tbody tr:nth-child(4){transition-delay:.71s}
+  .hl-grid.js .wise.in .wb-table tbody tr:nth-child(5){transition-delay:.83s}
+  .hl-grid.js .wise.in .wb-table .miss td{animation:wb-flash 1.2s ease 1.3s 2}
+}
+@media (max-width:760px){.hl-grid{grid-auto-rows:auto}.hl-card{height:300px}.hl-card.wise{height:356px}.wise-board{padding:52px 14px 0}.wb-table{font-size:11.5px}.wb-table td,.wb-table th{padding:5px 6px}}
 /* NC Quote screenshots fan out from a stack as you scroll (from v2) */
 .feature-grid .shot{border-radius:8px;overflow:hidden;box-shadow:0 18px 40px rgba(28,33,37,.14)}
 .feature-grid>div{will-change:transform;position:relative}
@@ -1232,7 +1256,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
   <section class="hl" id="highlights" aria-labelledby="hl-h">
     <div class="hl-head">
       <div><p class="eyebrow">Highlights</p><h2 id="hl-h">Best of the tools</h2></div>
-      <p class="lede">Five tools in daily use on the shop floor. Open a card to see how it works and try the demo.</p>
+      <p class="lede">Six tools in daily use on the shop floor and in the office. Open a card to see how it works and try the demo.</p>
     </div>
     <div class="hl-grid" id="hl-grid">
       <a class="hl-card w5 fit" href="#weldon" data-tab="weldon">
@@ -1255,10 +1279,26 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
         <span class="hl-tag">v30</span>
         <div class="hl-meta"><div><p class="eyebrow">CNC programming · Beamline</p><h3>3D Batch Viewer</h3></div><span class="hl-go" aria-hidden="true">→</span></div>
       </a>
-      <a class="hl-card w12" href="#training" data-tab="training">
+      <a class="hl-card w7" href="#training" data-tab="training">
         <div class="hl-media"><img src="img/training_practice.jpg" alt="" loading="lazy"></div>
         <span class="hl-tag">Training · simulator</span>
         <div class="hl-meta"><div><p class="eyebrow">Training · Tekla PowerFab</p><h3>PowerFab Training Website</h3><p>Learn PowerFab topic by topic, then practise on a simulator of the real screens.</p></div><span class="hl-go" aria-hidden="true">→</span></div>
+      </a>
+      <a class="hl-card w5 wise" href="#more-tools" data-tab="more-tools" data-target="wiseeye">
+        <div class="hl-media wise-board" aria-hidden="true">
+          <div class="wb-head"><span>Daily clock check</span><span>Today · sample data</span></div>
+          <table class="wb-table">
+            <thead><tr><th>Operator</th><th>In</th><th>Out</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>W01</td><td>06:58</td><td>15:32</td><td><i class="ok">OK</i></td></tr>
+              <tr class="miss"><td>W02</td><td>07:02</td><td>—</td><td><i class="no">No clock-out</i></td></tr>
+              <tr class="miss"><td>F01</td><td>—</td><td>15:28</td><td><i class="no">No clock-in</i></td></tr>
+              <tr><td>F02</td><td>07:00</td><td>15:35</td><td><i class="ok">OK</i></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <span class="hl-tag hot">2 to follow up today</span>
+        <div class="hl-meta"><div><p class="eyebrow">Office automation</p><h3>WiseEye Clock Check</h3><p>Shows the admin which operators didn’t clock in or out that day.</p></div><span class="hl-go" aria-hidden="true">→</span></div>
       </a>
     </div>
   </section>
@@ -1589,7 +1629,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
       <article class="mini"><p class="eyebrow">PowerFab · AI</p><h3>PowerFab MCP Server</h3><ul class="mini-ul"><li>An MCP server I built on PowerFab’s Open API.</li><li>Runs as a service that the Chatbot AI Agent calls.</li><li>Runs as an extension connector for Claude that teammates install on their own laptops.</li><li>Both give read-only tools for live jobs, stock, purchasing and estimates.</li></ul><p class="mini-meta">C# · .NET 8 · MCP · Claude extension</p></article>
       <article class="mini"><p class="eyebrow">PowerFab · Scheduling</p><h3>Production Plan Update by Scheduled Milestone</h3><ul class="mini-ul"><li>Updates the production plan against its scheduled milestones from live PowerFab data.</li><li>Workshop progress is tracked without asking the operators.</li><li>Flags jobs that are ready to close, nearly delivered or missing from the plan.</li></ul><p class="mini-meta">Python · PowerFab · Excel</p></article>
       <article class="mini"><p class="eyebrow">PowerFab · Data synchronisation</p><h3>Production Control Data Sync</h3><ul class="mini-ul"><li>Synchronises production data between the Production Control interface and the PowerFab system.</li><li>Both show the same job and lot information.</li></ul><p class="mini-meta">Python · JavaScript · Excel</p></article>
-      <article class="mini"><p class="eyebrow">Office automation</p><h3>WiseEye and Workbench Sync</h3><ul class="mini-ul"><li>Synchronises the WiseEye fingerprint time clock with Workbench automatically.</li><li>Each operator’s clock-in and clock-out goes straight into the Workbench data.</li><li>Nobody has to check it again.</li></ul><p class="mini-meta">Python · Windows installer · Microsoft 365</p></article>
+      <article class="mini" id="wiseeye"><p class="eyebrow">Office automation</p><h3>WiseEye and Workbench Sync</h3><ul class="mini-ul"><li>Synchronises the WiseEye fingerprint time clock with Workbench automatically.</li><li>Each operator’s clock-in and clock-out goes straight into the Workbench data.</li><li>Nobody has to check it again.</li><li>A daily clock check shows the admin which operators didn’t clock in or clock out that day.</li></ul><p class="mini-meta">Python · Windows installer · Microsoft 365</p></article>
       <article class="mini wide"><p class="eyebrow">PowerFab · Reports</p><h3>PowerFab Report Building</h3><ul class="mini-ul"><li>I build report layouts in PowerFab’s report designer, and the tools that read them.</li><li>The PDF Stamp Tool and Plate Process both start from one of these reports.</li></ul><div class="chips"><span>Production Control</span><span>Fab Matrix</span><span>Job Status by Lot</span><span>Material Traceability</span><span>Delivery Docket</span></div><p class="mini-meta">PowerFab report designer</p></article>
     </div>
   </section>
