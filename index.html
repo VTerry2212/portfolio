@@ -485,7 +485,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
 .hl-media>img,.hl-media>video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.22,1,.36,1),opacity .5s}
 .hl-media>video{opacity:0}
 .hl-card.playing .hl-media>video{opacity:1}
-.hl-card.fit{background:#2A6FA8}
+.hl-card.fit{background-color:#1C2125;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:24px 24px}
 .hl-card.fit .hl-media>img{object-fit:contain;padding:8% 16% 22%}
 .hl-card::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(16,20,23,0) 30%,rgba(16,20,23,.55) 58%,rgba(16,20,23,.92))}
 .hl-tag{position:absolute;z-index:2;top:14px;left:14px;font:500 11.5px/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;background:#fff;color:var(--ink);padding:7px 10px;border-radius:999px}
@@ -530,9 +530,12 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
 /* Contact drawing (from v2's footer shapes): lines draw in, labels pop, layers float and follow the pointer */
 .contact-art{overflow:visible}
 .contact-art .ba-layer{transition:transform 1.2s cubic-bezier(.22,1,.36,1)}
-@keyframes ba-float{50%{transform:translateY(-5px) rotate(-.6deg)}}
+.contact-art .runner{opacity:0}
+@keyframes ba-float{50%{transform:translateY(-5px)}}
 @keyframes ba-cl{to{stroke-dashoffset:-27}}
 @keyframes ba-ai{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes ba-run{0%,8%{transform:translateX(0)}22%,30%{transform:translateX(38px)}46%,54%{transform:translateX(190px)}70%,78%{transform:translateX(342px)}92%,100%{transform:translateX(380px);opacity:1}}
+@keyframes ba-hole{0%,100%{stroke:#F3F4F2}50%{stroke:#F0703A}}
 @media (prefers-reduced-motion:no-preference){
   .contact-art.js .dr{stroke-dasharray:1;stroke-dashoffset:1}
   .contact-art.js.go .dr{stroke-dashoffset:0;transition:stroke-dashoffset 1.3s cubic-bezier(.65,0,.35,1) var(--d,0s)}
@@ -543,8 +546,9 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
   .contact-art.js .ba-cta{opacity:0;transform:translateY(8px)}
   .contact-art.js.go .ba-cta{opacity:1;transform:none;transition:opacity .8s ease 2.4s,transform .8s cubic-bezier(.22,1,.36,1) 2.4s}
   .contact-art.js.go .ai{animation:ba-ai 2.2s ease-in-out 3.4s infinite}
+  .contact-art.js.go .runner{opacity:1;transition:opacity .3s ease 2.6s;animation:ba-run 7s cubic-bezier(.65,0,.35,1) 2.8s infinite}
+  .contact-art.js.go .hole{animation:ba-hole 7s ease-in-out 2.8s infinite}
   .contact-art.js.go .ba-float{transform-box:fill-box;transform-origin:center;animation:ba-float 6s ease-in-out 2s infinite}
-  .contact-art.js.go .ba-float.f2{animation-duration:5s;animation-delay:2.6s}
   .contact-art.js.go .ba-float.f3{animation-duration:7s;animation-delay:3s}
 }
 /* WiseEye tab: the daily clock-check table (sample data) */
@@ -570,33 +574,6 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
 }
 @keyframes ck-row{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:none}}
 .more-grid .mini.wide{grid-column:1/-1}
-/* Effort saved: step timeline and race (from the v2 sketches) */
-.sv-vis{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;align-items:start;background:var(--paper);padding:16px 18px;border-radius:10px}
-@media (max-width:860px){.sv-vis{grid-template-columns:minmax(0,1fr)}}
-.sv-vis .eyebrow{margin-bottom:8px}
-.tl-row{display:grid;grid-template-columns:112px minmax(0,1fr);gap:10px;align-items:center;margin:8px 0;font-size:14px}
-.tl-row>span{color:var(--muted);line-height:1.2}
-.tl-row>span b{display:block;font:700 19px/1.1 var(--f-display);color:var(--ink)}
-.tl-bar{display:flex;gap:2px;height:30px}
-.tl-bar i{display:flex;align-items:center;min-width:3px;border-radius:3px;overflow:hidden;transform-origin:left center;cursor:help}
-.tl-bar i.b{background:var(--c-before)}.tl-bar i.a{background:var(--c-after)}
-.tl-bar i span{padding:0 7px;font:500 11px/1 var(--f-mono);color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.race-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:2px}
-.race-h .eyebrow{margin:0}
-.race-trk{position:relative;height:24px;background:var(--zinc);border-radius:4px;overflow:hidden}
-.race-trk i{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:4px}
-.race-trk i.b{background:var(--c-before)}.race-trk i.a{background:var(--c-after)}
-.race-trk em{position:absolute;right:8px;top:50%;transform:translateY(-50%);font:500 11px/1 var(--f-mono);font-style:normal;color:#fff;white-space:nowrap}
-.race-clk{font:500 13px var(--f-mono);color:var(--muted);margin-top:4px;min-height:1.5em}
-@media (max-width:460px){.tl-row{grid-template-columns:86px minmax(0,1fr)}}
-@media (prefers-reduced-motion:no-preference){
-  .sv-vis .tl-bar i{transform:scaleX(0);transition:transform .7s cubic-bezier(.22,1,.36,1)}
-  .sv-vis.in .tl-bar i{transform:none}
-  .sv-vis.in .tl-bar i:nth-child(2){transition-delay:.12s}.sv-vis.in .tl-bar i:nth-child(3){transition-delay:.24s}
-  .sv-vis.in .tl-bar i:nth-child(4){transition-delay:.36s}.sv-vis.in .tl-bar i:nth-child(5){transition-delay:.48s}
-  .sv-vis.in .tl-bar i:nth-child(6){transition-delay:.6s}
-  .sv-vis.in .tl-row+.tl-row .tl-bar i{transition-delay:.8s}
-}
 /* Highlight cards: animated icon scenes instead of screenshots (drawn in the v1 line style) */
 .hl-card.art{background-color:#1C2125;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:24px 24px}
 .hl-art{position:absolute;left:0;right:0;top:4%;width:100%;height:70%;transition:transform 1.2s cubic-bezier(.22,1,.36,1)}
@@ -658,6 +635,53 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
 .tick-track .chips span::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--hivis);margin:0 20px}
 @keyframes tick-run{to{transform:translateX(-50%)}}
 @media (max-width:760px){.hl-card.art{height:360px}.hl-art{height:44%;top:5%}}
+/* WiseEye card: one operator presses the clock, the next walks past; the emailed table fills in (9 s loop) */
+.ck .ck-led{fill:#7EE2A8}
+.ck .ck-b{opacity:0}
+@keyframes ck-a{0%{transform:translateX(-30px);opacity:0}3%{opacity:1}20%,31%{transform:translateX(100px);opacity:1}43%{transform:translateX(196px);opacity:1}46%,100%{transform:translateX(196px);opacity:0}}
+@keyframes ck-arm{0%,21%{transform:rotate(0)}24%,29%{transform:rotate(-110deg)}32%,100%{transform:rotate(0)}}
+@keyframes ck-led{0%,23%{fill:#5A6670}24%,34%{fill:#7EE2A8}37%,100%{fill:#5A6670}}
+@keyframes ck-ok{0%,24%{opacity:0;transform:scale(.4)}27%,40%{opacity:1;transform:none}46%,100%{opacity:0}}
+@keyframes ck-ra{0%,30%{opacity:0;transform:translateX(-12px)}34%,92%{opacity:1;transform:none}97%,100%{opacity:0}}
+@keyframes ck-b{0%,48%{transform:translateX(-30px);opacity:0}51%{opacity:1}72%{transform:translateX(196px);opacity:1}75%,100%{transform:translateX(196px);opacity:0}}
+@keyframes ck-rb{0%,73%{opacity:0;transform:translateX(-12px)}77%,92%{opacity:1;transform:none}97%,100%{opacity:0}}
+@keyframes ck-mail{0%,76%{transform:none}79%{transform:translateY(-3px) rotate(-10deg)}82%{transform:rotate(8deg)}85%,100%{transform:none}}
+@keyframes ck-badge{0%,76%{opacity:0;transform:scale(0)}80%,92%{opacity:1;transform:none}97%,100%{opacity:0}}
+@keyframes ck-leg{0%,100%{transform:rotate(16deg)}50%{transform:rotate(-16deg)}}
+@media (prefers-reduced-motion:no-preference){
+  .ck .ck-a{animation:ck-a 9s linear infinite}
+  .ck .ck-arm{transform-box:fill-box;transform-origin:50% 0;animation:ck-arm 9s ease infinite}
+  .ck .ck-led{animation:ck-led 9s steps(1) infinite}
+  .ck .ck-ok{transform-box:fill-box;transform-origin:center;animation:ck-ok 9s ease infinite}
+  .ck .ck-ra{animation:ck-ra 9s ease infinite}
+  .ck .ck-b{animation:ck-b 9s linear infinite}
+  .ck .ck-rb{animation:ck-rb 9s ease infinite}
+  .ck .ck-mail{transform-box:fill-box;transform-origin:center;animation:ck-mail 9s ease infinite}
+  .ck .ck-badge{transform-box:fill-box;transform-origin:center;animation:ck-badge 9s ease infinite}
+  .ck .ck-leg{transform-box:fill-box;transform-origin:50% 0;animation:ck-leg .5s ease-in-out infinite}
+  .ck .ck-l2{animation-delay:-.25s}
+}
+/* NC Quote card: process 1 → 2 → 3 → 4, each step lights up in turn (6 s loop) */
+.nc .nc-s{fill:#F0703A;stroke:#F3F4F2;stroke-width:1.5}
+@keyframes nc-fill{0%,6%{transform:scaleX(0)}30%{transform:scaleX(.34)}55%{transform:scaleX(.68)}80%,92%{transform:scaleX(1)}98%,100%{transform:scaleX(0)}}
+@keyframes nc-s2{0%,29%{fill:#2A3238}31%,95%{fill:#F0703A}100%{fill:#2A3238}}
+@keyframes nc-s3{0%,54%{fill:#2A3238}56%,95%{fill:#F0703A}100%{fill:#2A3238}}
+@keyframes nc-s4{0%,79%{fill:#2A3238}81%,95%{fill:#F0703A}100%{fill:#2A3238}}
+@keyframes nc-i1{0%,2%{transform:none}6%{transform:translateY(-6px)}12%,100%{transform:none}}
+@keyframes nc-i2{0%,29%{transform:none}33%{transform:translateY(-6px)}39%,100%{transform:none}}
+@keyframes nc-i3{0%,54%{transform:none}58%{transform:translateY(-6px)}64%,100%{transform:none}}
+@keyframes nc-i4{0%,79%{transform:none}83%{transform:translateY(-6px)}89%,100%{transform:none}}
+@keyframes nc-h{0%,55%{transform:scale(0)}60%,93%{transform:scale(1)}98%,100%{transform:scale(0)}}
+@keyframes nc-cash{0%,79%{opacity:.3;transform:scale(.8)}84%{opacity:1;transform:scale(1.18)}88%,93%{opacity:1;transform:none}99%,100%{opacity:.3;transform:scale(.8)}}
+@media (prefers-reduced-motion:no-preference){
+  .nc .nc-fill{transform-box:fill-box;transform-origin:left center;animation:nc-fill 6s ease-in-out infinite}
+  .nc .nc-s2{animation:nc-s2 6s steps(1) infinite}.nc .nc-s3{animation:nc-s3 6s steps(1) infinite}.nc .nc-s4{animation:nc-s4 6s steps(1) infinite}
+  .nc .nc-i1{animation:nc-i1 6s ease infinite}.nc .nc-i2{animation:nc-i2 6s ease infinite}.nc .nc-i3{animation:nc-i3 6s ease infinite}.nc .nc-i4{animation:nc-i4 6s ease infinite}
+  .nc .nc-h{transform-box:fill-box;transform-origin:center;animation:nc-h 6s ease infinite}
+  .nc .nc-cash{transform-box:fill-box;transform-origin:center;animation:nc-cash 6s ease infinite}
+}
+.hl-art.nc,.hl-art.ck{height:58%}
+@media (max-width:760px){.hl-art.nc,.hl-art.ck{height:44%}}
 /* NC Quote screenshots fan out from a stack as you scroll (from v2) */
 .feature-grid .shot{border-radius:8px;overflow:hidden;box-shadow:0 18px 40px rgba(28,33,37,.14)}
 .feature-grid>div{will-change:transform;position:relative}
@@ -1396,17 +1420,19 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
         <div class="hl-meta"><div><p class="eyebrow">AI assistant · Live PowerFab status</p><h3>Chatbot AI Agent</h3></div><span class="hl-go" aria-hidden="true">→</span></div>
       </a>
       <a class="hl-card art w7" href="#batch-viewer" data-tab="batch-viewer" data-target="nc-quote">
-        <div class="hl-media"><svg class="hl-art" viewBox="0 0 400 220" aria-hidden="true">
-          <g transform="translate(28 52)"><path class="ln pn" d="M0 0h54l16 16v86H0z"/><path class="ln" d="M54 0v16h16"/><path class="lt" d="M10 30h44M10 40h44M10 50h30"/><rect class="or" x="8" y="66" width="38" height="20" rx="3"/><text x="27" y="81" text-anchor="middle">NC</text></g>
-          <path class="ant" d="M110 104h28"/>
-          <g transform="translate(146 66)"><rect class="ln pn" x="0" y="0" width="150" height="76"/><path class="ln" d="M0 10h150M0 66h150"/>
-            <circle class="ln hole" cx="18" cy="26" r="5" style="animation-delay:0s"/><circle class="ln hole" cx="18" cy="50" r="5" style="animation-delay:.25s"/>
-            <rect class="ln hole" x="62" y="30" width="26" height="16" rx="8" style="animation-delay:.5s"/>
-            <circle class="ln hole" cx="132" cy="26" r="5" style="animation-delay:.75s"/><circle class="ln hole" cx="132" cy="50" r="5" style="animation-delay:1s"/>
-            <path class="ors" d="M0 84h150M0 80v8M150 80v8"/></g>
-          <path class="ant" d="M304 104h22"/>
-          <g transform="translate(348 196)"><g class="coin" style="animation-delay:1.2s"><rect class="or" x="-18" y="-9" width="36" height="9" rx="4.5"/><path d="M-12 -4.5h24" stroke="#1C2125" stroke-width="1.4" opacity=".5"/></g><g class="coin" style="animation-delay:1.5s"><rect class="or" x="-18" y="-18" width="36" height="9" rx="4.5"/><path d="M-12 -13.5h24" stroke="#1C2125" stroke-width="1.4" opacity=".5"/></g><g class="coin" style="animation-delay:1.9s"><rect class="or" x="-18" y="-27" width="36" height="9" rx="4.5"/><path d="M-12 -22.5h24" stroke="#1C2125" stroke-width="1.4" opacity=".5"/></g><g class="coin" style="animation-delay:2.2s"><rect class="or" x="-18" y="-36" width="36" height="9" rx="4.5"/><path d="M-12 -31.5h24" stroke="#1C2125" stroke-width="1.4" opacity=".5"/></g><text x="30" y="-12" style="font-size:13px;fill:#F0703A;font-weight:700">$$</text></g>
-          <g transform="translate(334 70)"><g class="swing"><path class="ln" d="M14 0v10"/><path class="or" d="M0 10h28l10 14v40H-10V24z"/><circle class="wt" cx="14" cy="22" r="3"/><text x="14" y="54" text-anchor="middle" style="font-size:24px;font-weight:700">$</text></g></g>
+        <div class="hl-media"><svg class="hl-art nc" viewBox="0 0 400 210" aria-hidden="true">
+          <g class="nc-i nc-i1"><path class="ln pn" d="M26 48h38l14 14v62H26z"/><path class="ln" d="M64 48v14h14"/><path class="lt" d="M34 72h34M34 82h24"/><rect class="or" x="33" y="96" width="34" height="18" rx="3"/><text x="50" y="109.5" text-anchor="middle" style="font-size:12px">NC</text></g>
+          <g class="nc-i nc-i2"><rect class="ln pn" x="116" y="50" width="72" height="72" rx="2"/><path class="ln" d="M116 64h72"/><path class="lt" d="M116 82h72M116 98h72M116 114h72M136 64v58" style="opacity:.6"/><rect class="or" x="140" y="70" width="30" height="6" rx="2" opacity=".85"/></g>
+          <g class="nc-i nc-i3"><rect class="ln pn" x="212" y="62" width="80" height="48"/><path class="ln" d="M212 70h80M212 102h80"/>
+            <circle class="ln nc-h" cx="226" cy="80" r="4"/><circle class="ln nc-h" cx="226" cy="93" r="4" style="animation-delay:.12s"/><rect class="ln nc-h" x="243" y="81" width="18" height="10" rx="5" style="animation-delay:.24s"/><circle class="ln nc-h" cx="278" cy="80" r="4" style="animation-delay:.36s"/><circle class="ln nc-h" cx="278" cy="93" r="4" style="animation-delay:.48s"/></g>
+          <g class="nc-i nc-i4"><rect class="ln pn" x="314" y="48" width="64" height="76" rx="3"/><path class="lt" d="M322 62h30M322 72h22"/><path class="ln" d="M322 108h48"/><text class="nc-cash" x="346" y="100" text-anchor="middle" style="font-size:30px;font-weight:700;fill:#F0703A">$</text></g>
+          <path d="M52 156H346" stroke="#F3F4F2" stroke-width="3" stroke-linecap="round" opacity=".18"/>
+          <path class="nc-fill" d="M52 156H346" stroke="#F0703A" stroke-width="3" stroke-linecap="round"/>
+          <g><circle class="nc-s nc-s1" cx="52" cy="156" r="12"/><text x="52" y="160.5" text-anchor="middle">1</text></g>
+          <g><circle class="nc-s nc-s2" cx="152" cy="156" r="12"/><text x="152" y="160.5" text-anchor="middle">2</text></g>
+          <g><circle class="nc-s nc-s3" cx="252" cy="156" r="12"/><text x="252" y="160.5" text-anchor="middle">3</text></g>
+          <g><circle class="nc-s nc-s4" cx="346" cy="156" r="12"/><text x="346" y="160.5" text-anchor="middle">4</text></g>
+          <g style="font-size:10.5px"><text x="52" y="188" text-anchor="middle" style="font-size:10.5px;fill:#F3F4F2;opacity:.75">NC FILES</text><text x="152" y="188" text-anchor="middle" style="font-size:10.5px;fill:#F3F4F2;opacity:.75">PARTS LIST</text><text x="252" y="188" text-anchor="middle" style="font-size:10.5px;fill:#F3F4F2;opacity:.75">COUNT</text><text x="346" y="188" text-anchor="middle" style="font-size:10.5px;fill:#F0703A">PRICE</text></g>
         </svg></div>
         <span class="hl-tag">Estimating · try the demo</span>
         <div class="hl-meta"><div><p class="eyebrow">Built into the 3D Batch Viewer</p><h3>NC Processing Quote</h3><p>Prices the production work for a quotation, before the job is won.</p></div><span class="hl-go" aria-hidden="true">→</span></div>
@@ -1450,20 +1476,28 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
         <span class="hl-tag">Training · simulator</span>
         <div class="hl-meta"><div><p class="eyebrow">Training · Tekla PowerFab</p><h3>PowerFab Training Website</h3><p>Learn PowerFab topic by topic, then practise on a simulator of the real screens.</p></div><span class="hl-go" aria-hidden="true">→</span></div>
       </a>
-      <a class="hl-card w5 wise" href="#wiseeye-tool" data-tab="wiseeye-tool">
-        <div class="hl-media wise-board" aria-hidden="true">
-          <div class="wb-head"><span>Daily clock check</span><span>Today · sample data</span></div>
-          <table class="wb-table">
-            <thead><tr><th>Operator</th><th>In</th><th>Out</th><th>Status</th></tr></thead>
-            <tbody>
-              <tr><td>W01</td><td>06:58</td><td>15:32</td><td><i class="ok">OK</i></td></tr>
-              <tr class="miss"><td>W02</td><td>07:02</td><td>—</td><td><i class="no">No clock-out</i></td></tr>
-              <tr class="miss"><td>F01</td><td>—</td><td>15:28</td><td><i class="no">No clock-in</i></td></tr>
-              <tr><td>F02</td><td>07:00</td><td>15:35</td><td><i class="ok">OK</i></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <span class="hl-tag hot">2 to follow up today</span>
+      <a class="hl-card w5 wise art" href="#wiseeye-tool" data-tab="wiseeye-tool">
+        <div class="hl-media"><svg class="hl-art ck" viewBox="0 0 400 210" aria-hidden="true">
+          <path class="lt" d="M6 180h200"/>
+          <path class="ln" d="M14 180V64h46v116" opacity=".45"/><text x="37" y="58" text-anchor="middle" style="font-size:9px;fill:#F3F4F2;opacity:.6">DOOR</text>
+          <g transform="translate(112 78)"><rect class="ln pn" x="0" y="0" width="34" height="50" rx="4"/><rect class="ln" x="6" y="6" width="22" height="11" rx="2"/><circle class="ln" cx="17" cy="32" r="7"/><path class="lt" d="M13 32a4 4 0 0 1 8 0M15 35a2 2 0 0 1 4 0" style="opacity:.85"/><circle class="ck-led" cx="17" cy="44" r="2.6"/></g>
+          <text x="129" y="70" text-anchor="middle" style="font-size:9px;fill:#F3F4F2;opacity:.6">WISEEYE</text>
+          <g class="ck-ok"><circle cx="160" cy="76" r="9" fill="#2B7A4B"/><path d="M155.5 76l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g>
+          <g class="ck-a" transform="translate(100 0)"><path class="ln ck-leg" d="M-4 150v30"/><path class="ln ck-leg ck-l2" d="M4 150v30"/><rect x="-9" y="118" width="18" height="34" rx="5" fill="#F2CE3C"/><path d="M-9 132h18" stroke="#9A9A9A" stroke-width="2"/><circle cx="0" cy="108" r="7" fill="#E9D3BF"/><path d="M-8.5 106a8.5 8.5 0 0 1 17 0z" fill="#2A6FA8"/><path class="ln ck-arm" d="M6 122v22"/></g>
+          <g class="ck-b" transform="translate(-60 0)"><path class="ln ck-leg" d="M-4 150v30"/><path class="ln ck-leg ck-l2" d="M4 150v30"/><rect x="-9" y="118" width="18" height="34" rx="5" fill="#F0703A"/><path d="M-9 132h18" stroke="#9A9A9A" stroke-width="2"/><circle cx="0" cy="108" r="7" fill="#E9D3BF"/><path d="M-8.5 106a8.5 8.5 0 0 1 17 0z" fill="#F3F4F2"/><path class="ln" d="M6 122v22"/></g>
+          <g transform="translate(212 26)">
+            <rect class="ln pn" x="0" y="0" width="178" height="150" rx="6"/>
+            <g class="ck-mail"><rect class="ln" x="10" y="10" width="22" height="15" rx="2"/><path class="ln" d="M11 11l10 8 10-8"/></g>
+            <g class="ck-badge"><circle cx="33" cy="10" r="6.5" fill="#F0703A"/><text x="33" y="13.5" text-anchor="middle" style="font-size:9px">1</text></g>
+            <text x="42" y="22" style="font-size:11px">Daily clock check</text>
+            <text x="10" y="48" style="font-size:9px;fill:#F3F4F2;opacity:.55">NAME</text><text x="64" y="48" style="font-size:9px;fill:#F3F4F2;opacity:.55">IN</text><text x="108" y="48" style="font-size:9px;fill:#F3F4F2;opacity:.55">STATUS</text>
+            <path class="lt" d="M8 55h162"/>
+            <g class="ck-ra"><rect x="6" y="61" width="166" height="24" rx="3" fill="#F3F4F2" opacity=".06"/><text x="10" y="77" style="font-size:12px">Mr. A</text><text x="64" y="77" style="font-size:12px">06:58</text><text x="108" y="77" style="font-size:12px;fill:#7EE2A8">Clock in</text></g>
+            <g class="ck-rb"><rect x="6" y="89" width="166" height="24" rx="3" fill="#F0703A" opacity=".2"/><text x="10" y="105" style="font-size:12px">Mr. B</text><text x="64" y="105" style="font-size:12px">—</text><rect x="102" y="93" width="70" height="16" rx="8" fill="#D9480F"/><text x="137" y="104.5" text-anchor="middle" style="font-size:9px">Not clock in</text></g>
+            <text x="10" y="140" style="font-size:9px;fill:#F3F4F2;opacity:.45">SAMPLE DATA</text>
+          </g>
+        </svg></div>
+        <span class="hl-tag hot">1 to follow up today</span>
         <div class="hl-meta"><div><p class="eyebrow">Office automation</p><h3>WiseEye Clock Check</h3><p>Shows the admin which operators didn’t clock in or out that day.</p></div><span class="hl-go" aria-hidden="true">→</span></div>
       </a>
     </div>
@@ -1901,7 +1935,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
       <!-- A 310UB40 beam, 2000 long, drawn to one scale (0.19 px per mm): 304 deep, end plates, a stiffener at 1000,
            one line of two holes 200 from each end. Running dimensions go to each hole line from the LH end.
            Layers: beam, dimensions and the mark tag move at different depths with the pointer; lines draw in on scroll. -->
-      <g class="ba-layer" data-depth="0.5"><g class="ba-float f1">
+      <g class="ba-layer" data-depth="0"><g class="ba-float f1">
         <g fill="none" stroke="#F3F4F2" stroke-width="1.300" opacity=".85">
           <rect class="dr" pathLength="1" x="53" y="91" width="374" height="3"/><rect class="dr" pathLength="1" x="53" y="146" width="374" height="3"/>
           <rect class="dr" pathLength="1" x="50" y="86" width="3" height="68"/><rect class="dr" pathLength="1" x="427" y="86" width="3" height="68"/>
@@ -1911,7 +1945,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
         </g>
         <path class="cl" d="M30 120H450" fill="none" stroke="#F3F4F2" stroke-width="1" stroke-dasharray="16 4 3 4" opacity=".35"/>
       </g></g>
-      <g class="ba-layer" data-depth="1.2"><g class="ba-float f2">
+      <g class="ba-layer" data-depth="0"><g class="ba-float f1">
         <g fill="none" stroke="#F0703A" stroke-width="1.300">
           <path class="dr dim" pathLength="1" d="M50 80V36M430 80V36M50 44H430"/><path class="pop" d="M50 44l9-3.500v7zM430 44l-9-3.500v7z" fill="#F0703A"/>
           <path class="dr dim" pathLength="1" d="M50 160v34M88 160v34M240 160v34M392 160v34M430 160v34M50 188H430"/>
@@ -1919,6 +1953,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
           <path class="pop" d="M88 188l-8-3v6zM240 188l-8-3v6zM392 188l-8-3v6zM430 188l-8-3v6z" fill="#F0703A"/>
           <path class="dr dim" pathLength="1" d="M241 94L286 60H346M300 60V72L312 60"/><path class="pop" d="M241 94L250 91L246.400 86.200Z" fill="#F0703A"/>
         </g>
+        <circle class="runner" cx="50" cy="188" r="3.200" fill="#F0703A"/>
         <text class="pop" x="240" y="38" text-anchor="middle" style="fill:#F0703A">2000</text>
         <text class="pop" x="296" y="72" text-anchor="end" style="fill:#F0703A">6</text>
         <g text-anchor="middle"><text class="pop" x="50" y="208" style="fill:#F0703A">0</text><text class="pop" x="88" y="208" style="fill:#F0703A">200</text><text class="pop" x="240" y="208" style="fill:#F0703A">1000</text><text class="pop" x="392" y="208" style="fill:#F0703A">1800</text><text class="pop" x="430" y="208" style="fill:#F0703A">2000</text></g>
@@ -2022,34 +2057,6 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--hivis);outline-offs
     h('p','sv-note',card,'Step times come from my own review of this job, done the old way and with the tool. The 30 sample '+T.many+' are simulated from those times, with every step varying by 1 to 20 percent.');
     h('div','sv-kpis',kp,'<div><span>Before</span><b>'+fmt(avg.tb)+'</b></div><div><span>With the tool</span><b>'+fmt(avg.ta)+'</b></div><div><span>Time saved</span><b>'+Math.round((1-avg.ta/avg.tb)*100)+'%</b></div><div><span>Over 30 '+T.many+'</span><b>'+Math.round(hours)+' hours</b></div>');
     h('div','sv-legend',kp,'<span><i style="background:var(--c-before);border-radius:2px"></i>Before the tool (whole bar)</span><span><i style="background:var(--c-after);border-radius:2px"></i>With the tool</span><span>Dashed lines are the averages</span>');
-    /* Step timeline on one time scale, and a race between the two ways (averages of the 30 samples) */
-    (function(){
-      var RMv=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var SHORT={stamp:{b:['Rename','Split by lot','Combine','Colours','Add stamp','Adjust every page'],a:['Export','Upload + check','Colours','Tool stamps','Review']},
-                 vacam:{b:['Import and fix errors','Split saw parts by hand'],a:['Viewer fixes + splits','Import','Review']}}[T.key];
-      var vis=h('div','sv-vis',root);
-      function segs(vals,names,steps,cls){return vals.map(function(v,k){var lab=v/avg.tb>0.06?names[k]:'';
-        return '<i class="'+cls+'" style="flex:'+v.toFixed(2)+'" title="'+(k+1)+'. '+steps[k][0].replace(/"/g,'&quot;')+': '+fmt(v)+'"><span>'+lab+'</span></i>'}).join('')}
-      vis.innerHTML='<div class="tl"><p class="eyebrow">Step timeline · same time scale</p>'+
-        '<div class="tl-row"><span>Before<b>'+fmt(avg.tb)+'</b></span><div class="tl-bar" style="width:100%">'+segs(avg.b,SHORT.b,T.before,'b')+'</div></div>'+
-        '<div class="tl-row"><span>With the tool<b>'+fmt(avg.ta)+'</b></span><div class="tl-bar" style="width:'+(avg.ta/avg.tb*100).toFixed(2)+'%">'+segs(avg.a,SHORT.a,T.after,'a')+'</div></div></div>'+
-        '<div class="race"><div class="race-h"><p class="eyebrow">Race · one '+T.one.toLowerCase()+', both ways at once</p><button type="button" class="replay race-go">Replay</button></div>'+
-        '<div class="tl-row"><span>Before</span><div class="race-trk"><i class="b"></i><em></em></div></div>'+
-        '<div class="tl-row"><span>With the tool</span><div class="race-trk"><i class="a"></i><em></em></div></div>'+
-        '<p class="race-clk">0 min elapsed</p></div>';
-      var fb=vis.querySelector('.race-trk i.b'), fa=vis.querySelector('.race-trk i.a'), em=vis.querySelectorAll('.race-trk em'), clk=vis.querySelector('.race-clk'), raf=0, D=4200;
-      function draw(m){
-        fb.style.width=Math.min(100,m/avg.tb*100).toFixed(2)+'%'; fa.style.width=Math.min(100,m/avg.ta*100).toFixed(2)+'%';
-        em[0].textContent=m>=avg.tb?'Done · '+fmt(avg.tb):''; em[1].textContent=m>=avg.ta?'Done · '+fmt(avg.ta):'';
-        clk.textContent=fmt(Math.min(m,avg.tb))+' elapsed'+(m>=avg.ta&&m<avg.tb?' · the tool is already done':m>=avg.tb?' · saved '+fmt(avg.tb-avg.ta):'');
-      }
-      function run(){ cancelAnimationFrame(raf); if(RMv){draw(avg.tb);return}
-        var t0=0; function f(now){ if(!t0)t0=now; var p=Math.min(1,(now-t0)/D); draw(p*avg.tb); if(p<1) raf=requestAnimationFrame(f) } raf=requestAnimationFrame(f) }
-      vis.querySelector('.race-go').addEventListener('click',run);
-      draw(0);
-      if('IntersectionObserver' in window&&!RMv){ var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ vis.classList.add('in'); run(); io.disconnect() } })},{threshold:0.4}); io.observe(vis) }
-      else { vis.classList.add('in'); draw(avg.tb) }
-    })();
     card=root;
     var W=1000,H=250,L=34,R=118,Tp=20,B=34, max=Math.max.apply(null,S.map(function(s){return s.tb})), step=max>90?30:15, top2=Math.ceil(max/step)*step, cw=(W-L-R)/N, bw=Math.min(20,cw-8);
     function x(i){return L+cw*(i+0.5)} function y(v){return Tp+(H-Tp-B)*(1-v/top2)}
@@ -3572,7 +3579,7 @@ K.register('training',function(r){root=r;reset();render()});
     var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ art.classList.add('go'); io.disconnect() } })},{threshold:0.35});
     io.observe(art);
   } else art.classList.add('go');
-  var sec=art.closest('section')||document.body, layers=[].slice.call(art.querySelectorAll('.ba-layer'));
+  var sec=art.closest('section')||document.body, layers=[].slice.call(art.querySelectorAll('.ba-layer:not([data-depth="0"])'));
   if(!(window.matchMedia&&matchMedia('(hover:hover)').matches)) return;
   sec.addEventListener('pointermove',function(e){
     var r=sec.getBoundingClientRect(), nx=(e.clientX-r.left)/r.width-.5, ny=(e.clientY-r.top)/r.height-.5;
